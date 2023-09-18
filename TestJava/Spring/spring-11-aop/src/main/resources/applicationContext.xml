@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--        指定要扫描的包的位置： 这个包下的注解 @Component @Service @Controller @Repository就会生效-->
+    <!--    <context:component-scan base-package="com" />-->
+    <!--    <context:annotation-config />-->
+
+    <!--    方式三：Spring 注解的注入-->
+    <bean id="annotationPointCur" class="com.sun.diy.AnnotationPointCut"/>
+    <!--    开启注解支持 JDK(默认 proxy-target-class="false") cglib proxy-target-class="true" -->
+    <aop:aspectj-autoproxy proxy-target-class="false"/>
+
+    <bean id="userService" class="com.sun.service.UserServiceImpl"/>
+    <bean id="beforeLog" class="com.sun.log.BeforeLog"/>
+    <bean id="afterLog" class="com.sun.log.AfterLog"/>
+
+    <!--    方式一： 使用原生的 Spring API 接口配置-->
+    <aop:config>
+        <!--    切入点：expression:表达式 execution(要执行的位置! * * * * *)-->
+        <aop:pointcut id="pointcut" expression="execution(* com.sun.service.UserServiceImpl.*(..))"/>
+
+        <!--    执行环绕-->
+        <aop:advisor advice-ref="beforeLog" pointcut-ref="pointcut"/>
+        <aop:advisor advice-ref="afterLog" pointcut-ref="pointcut"/>
+    </aop:config>
+
+    <bean id="diy" class="com.sun.diy.DiyPointCut"/>
+
+    <!--方式二： 用aspectj 方式，将要切入的方法，封装成类-->
+    <aop:config>
+        <!--自定义切面，ref 要切入的类-->
+        <aop:aspect ref="diy">
+            <!--自定义切入点-->
+            <aop:pointcut id="point" expression="execution(* com.sun.service.UserServiceImpl.*(..))"/>
+
+            <!--通知：即要切入的内容  -->
+            <aop:before method="before" pointcut-ref="point"/>
+            <aop:after method="after" pointcut-ref="point"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

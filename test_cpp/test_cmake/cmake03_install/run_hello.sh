@@ -1,0 +1,1 @@
+echo "this is cmake03_install test_cmake/cmake03_install/doc/run_hello.txt"

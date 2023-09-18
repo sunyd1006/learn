@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--
+    DataSource: 使用Spring 替换 c3p0 dbcp druid
+    这里使用：org.springframework.jdbc.datasource
+-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://121.40.254.238:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8" />
+        <property name="username"  value="root" />
+        <property name="password" value="1210" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+
+<!--        导入所有的：mybatis-sql映射-->
+        <property name="mapperLocations" value="classpath:com/sun/mapper/*.xml" />
+    </bean>
+
+<!--    SqlSessionTemplate: 就相当于Mybatis中的sqlSession -->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+<!--   方式一：UserMapperImpl
+    转移：applicationContext.xml 中
+ -->
+<!--    <bean id="UserMapper1" class="com.sun.mapper.UserMapperImpl1" >-->
+<!--        <property name="sqlSessionTemplate" ref="sqlSessionTemplate" />-->
+<!--    </bean>-->
+
+    <!--   方式二：UserMapperImpl2 继承  -->
+
+</beans>

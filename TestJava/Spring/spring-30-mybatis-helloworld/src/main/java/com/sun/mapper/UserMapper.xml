@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.mapper.UserMapper">
+
+<!--    id= UserMapper的方法名, 相当于 一个继承UserMapper接口的class, 并实现了UserMapper的方法，-->
+    <select id="getUserList" resultType="com.sun.pojo.User">
+        select * from mybatis.user
+    </select>
+    
+
+    <insert id="addUser" parameterType="com.sun.pojo.User" >
+        insert into mybatis.user (id, name, pwd) values(#{id}, #{name}, #{pwd});
+    </insert>
+
+    <insert id="addUserByMap" parameterType="map" >
+        insert into mybatis.user (id, name) values(#{myid}, #{myname});
+    </insert>
+
+    <delete id="deleteUserById" parameterType="int" >
+        delete from mybatis.user where id =#{id};
+    </delete>
+
+    <update id="updateUserById" parameterType="com.sun.pojo.User" >
+        update mybatis.user set name=#{name},pwd=#{pwd} where id =#{id};
+    </update>
+
+    <select id="getUserById" resultType="com.sun.pojo.User" parameterType="int">
+        select * from mybatis.user where id = #{id}
+    </select>
+</mapper>

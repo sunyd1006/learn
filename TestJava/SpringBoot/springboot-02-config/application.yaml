@@ -1,0 +1,34 @@
+
+# SpringBoot 官方推荐使用 Yaml配置
+person:
+  name: sunhao
+  age: 3
+  happy: false
+  birth: 2019/11/02
+  maps: {k1:v1, k2:v2}
+  list:
+    - code
+    - music
+    - girl
+  dog:
+    name: wangcai
+    age: 3
+
+
+# 选择要激活那个环境模块
+server:
+  port: 8081
+  profiles:
+    active: test
+---
+server:
+  port: 8083
+spring:
+  profiles: dev #配置环境的名称
+
+---
+server:
+  port: 8084
+spring:
+  profiles: test  #配置环境的名称
+

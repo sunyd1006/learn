@@ -1,0 +1,18 @@
+
+# ==== 确保alias可用
+# echo 'source /root/bigsun/backup/bashrc' > ~/.bashrc
+
+# ===== common config
+workdir='/root/bigsun'
+
+
+alias cdwork="cd ${workdir}"
+
+alias viprofile="vim ${workdir}/backup/bashrc"
+
+alias mysource="source ${workdir}/backup/bashrc"
+alias echorc="echo 'source /root/bigsun/backup/bashrc' >> ~/.bashrc"
+
+
+# ==== import some software
+export PATH=$PATH:/root/miniconda3/bin:/root/anaconda3/bin

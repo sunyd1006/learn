@@ -1,0 +1,6 @@
+
+# ignore
+backup/Miniconda3-*.sh
+**/__MACOSX/**
+
+
