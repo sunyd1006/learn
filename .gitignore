@@ -14,3 +14,9 @@ build
 # My configurations:
 db.ini
 deploy_key_rsa
+
+# ignore elf files, theos file doesn't have suffix name.
+# test_grpc/examples/cpp/*/*
+# !test_grpc/examples/**/*.*
+# !test_grpc/examples/**/BUILD
+# !test_grpc/examples/**/Makefile
