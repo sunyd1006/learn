@@ -1,4 +1,4 @@
-package thread_pattern.event_driven_modle;
+package thread_pattern.event_driven_model_simple;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -20,5 +20,5 @@ public @interface EventAnnotation {
   /**
    * 事件类型
    */
-  GlobalEventType eventType();
+  BaseEvent.GlobalEventType eventType();
 }

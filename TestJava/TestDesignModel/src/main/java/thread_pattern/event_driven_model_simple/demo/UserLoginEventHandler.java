@@ -1,15 +1,15 @@
-package thread_pattern.event_driven_modle.demo;
+package thread_pattern.event_driven_model_simple.demo;
 
 
-import thread_pattern.event_driven_modle.EventListener;
+import thread_pattern.event_driven_model_simple.EventHandler;
 
 /**
- * @ClassName: UserLoginEventListener
+ * @ClassName: UserLoginEventHandler
  * @Description: 样例事件监听器（用于演示使用）
  * @Author: liulianglin
  * @DateTime 2022年4月21日 下午3:36:17
  */
-public class UserLoginEventListener implements EventListener<UserLoginEvent> {
+public class UserLoginEventHandler implements EventHandler<UserLoginEvent> {
 
   @Override
   public void handleEvent(UserLoginEvent event) {

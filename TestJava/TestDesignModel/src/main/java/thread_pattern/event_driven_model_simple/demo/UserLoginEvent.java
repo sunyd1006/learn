@@ -1,8 +1,7 @@
-package thread_pattern.event_driven_modle.demo;
+package thread_pattern.event_driven_model_simple.demo;
 
 
-import thread_pattern.event_driven_modle.BaseEvent;
-import thread_pattern.event_driven_modle.GlobalEventType;
+import thread_pattern.event_driven_model_simple.BaseEvent;
 
 /**
  *

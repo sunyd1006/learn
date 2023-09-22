@@ -1,4 +1,4 @@
-package thread_pattern.event_driven_modle;
+package thread_pattern.event_driven_model_simple;
 
 /**
  * <li>xxxxxxxxxx</li>
@@ -7,6 +7,13 @@ package thread_pattern.event_driven_modle;
  * @Date: 2023/1/5 17:21
  */
 public class BaseEvent {
+
+  public enum GlobalEventType {
+    LOGIN,// 登陆事件
+    EXIT,// 退出事件
+    ;
+  }
+
   /**
    * 是否在消息主线程(一般就是注册事件的线程）同步执行
    */

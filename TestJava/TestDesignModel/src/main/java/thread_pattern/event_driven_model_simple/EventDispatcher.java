@@ -1,13 +1,10 @@
-package thread_pattern.event_driven_modle;
+package thread_pattern.event_driven_model_simple;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 /**
  * @ClassName: EventDispatcher
@@ -20,14 +17,14 @@ public enum EventDispatcher {
   INSTANCE;
 
   // 事件类型与事件处理器列表的映射关系
-  private final Map<GlobalEventType, List<EventListener<? extends BaseEvent>>> observers = new HashMap<>();
+  private final Map<BaseEvent.GlobalEventType, List<EventHandler<? extends BaseEvent>>> eventHandlers = new ConcurrentHashMap<>();
   // 异步执行的事件队列
   private LinkedBlockingQueue<BaseEvent> eventQueue = new LinkedBlockingQueue<>();
-  private ExecutorService executorService;
+  private ExecutorService eventExecPool;
 
   EventDispatcher() {
-    executorService = Executors.newSingleThreadExecutor();
-    executorService.execute(new EventWorker());
+    eventExecPool = Executors.newSingleThreadExecutor();
+    eventExecPool.execute(new EventWorker());
   }
 
   /**
@@ -42,7 +39,7 @@ public enum EventDispatcher {
       while (true) {
         try {
           BaseEvent event = eventQueue.take();
-          if (event.getEvtType() == GlobalEventType.EXIT) {
+          if (event.getEvtType() == BaseEvent.GlobalEventType.EXIT) {
             break;
           }
           handler(event);
@@ -57,15 +54,22 @@ public enum EventDispatcher {
    * 注册事件
    *
    * @param evtType  事件类型
-   * @param listener 具体监听器
+   * @param handler 具体监听器
    */
-  public void registerEvent(GlobalEventType evtType, EventListener<? extends BaseEvent> listener) {
-    List<EventListener<? extends BaseEvent>> listeners = observers.get(evtType);
-    if (listeners == null) {
-      listeners = new ArrayList<>();
-      observers.put(evtType, listeners);
-    }
-    listeners.add(listener);
+  public void registerEvent(BaseEvent.GlobalEventType evtType, EventHandler<? extends BaseEvent> handler) {
+    List<EventHandler<? extends BaseEvent>> handlers = eventHandlers.getOrDefault(evtType, new ArrayList<>());
+    handlers.add(handler);
+    eventHandlers.put(evtType, handlers);
+  }
+
+  public void descEvents() {
+    eventHandlers.forEach((k, v) -> {
+      StringBuilder sb = new StringBuilder(k + ": {");
+      for (EventHandler<? extends BaseEvent> eventHandler : v) {
+        sb.append(eventHandler.getClass().getName() + ", ");
+      }
+      System.out.println(sb.substring(0, sb.length() - 1) + "}");
+    });
   }
 
   /**
@@ -95,11 +99,11 @@ public enum EventDispatcher {
    */
   @SuppressWarnings({"rawtypes", "unchecked"})
   private void handler(BaseEvent event) {
-    GlobalEventType evtType = event.getEvtType();
-    List<EventListener<? extends BaseEvent>> listeners = observers.get(evtType);
+    BaseEvent.GlobalEventType evtType = event.getEvtType();
+    List<EventHandler<? extends BaseEvent>> listeners = eventHandlers.get(evtType);
     if (listeners != null) {
       // 一个事件可能被多个事件处理器关注及待处理
-      for (EventListener listener : listeners) {
+      for (EventHandler listener : listeners) {
         try {
           listener.handleEvent(event);
         } catch (Exception e) {
@@ -108,7 +112,7 @@ public enum EventDispatcher {
         }
       }
     } else {
-      throw new EventDrivenException("can not find the event handler with the event type is " + event.getEvtType());
+      throw new RuntimeException("can not find the event handler with the event type is " + event.getEvtType());
     }
   }
 
@@ -121,7 +125,7 @@ public enum EventDispatcher {
    * @Datetime: 2022年5月19日 下午7:29:17
    */
   public void stopSyncEventDispatchThread() {
-    eventQueue.add(new BaseEvent(GlobalEventType.EXIT, false));
+    eventQueue.add(new BaseEvent(BaseEvent.GlobalEventType.EXIT, false));
   }
 
 }
