@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myUserDaoMysqlImpl" class="com.dao.UserDaoMysqlImpl"> </bean>
+
+    <!--id: 对象名-->
+    <!--class: 对象类-->
+    <!--name: 对象别名，就是可以有多个名字-->
+    <bean id="my_ioc_UserServiceImpl" class="com.service.UserServiceImpl" name="alias1 alias2">
+        <property name="userDao" ref="myUserDaoMysqlImpl"/>
+    </bean>
+
+    <!--<bean id="myUserServiceImpl" class="com.service.UserServiceImpl">-->
+    <!--    <property name="userDao" value=""></property>-->
+    <!--</bean>-->
+
+</beans>

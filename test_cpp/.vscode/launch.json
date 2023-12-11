@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "sunyd_local_compile_file_and_gdb_debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "g++_compile_sigle_file",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.out",
+            // "coreDumpPath": "/apsara/cloud/data/corefile/",
+            "args": [],
+            "environment": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            // mac not supported integrated terminal
+            "externalConsole": true,
+            "MIMode": "gdb",
+        },
+        {
+            "name": "sunyd_lldb_compile_single_file",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "g++_compile_sigle_file",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.out",
+            "args": [],
+            "environment": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "linux": {
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            }
+        }
+    ]
+}

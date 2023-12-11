@@ -1,0 +1,19 @@
+
+
+server:
+  port: 8080
+
+management:
+  server:
+    port: 7002
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application:
+        ${spring.application.name}

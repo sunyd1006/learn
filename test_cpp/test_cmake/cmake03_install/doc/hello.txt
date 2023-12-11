@@ -1,0 +1,1 @@
+this is cmake03_install test_cmake/cmake03_install/doc/hello.txt

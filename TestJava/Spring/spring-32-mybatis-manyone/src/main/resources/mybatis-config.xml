@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="db.properties" />
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+<!--    为实体类，com.sun.pojo.User配置别名，就是为了在UserMapper中写起来，不那么麻烦而已-->
+    <typeAliases>
+        <typeAlias type="com.sun.pojo.Teacher" alias="Teacher"/>
+        <typeAlias type="com.sun.pojo.Student" alias="Student"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://121.40.254.238:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="1210"/>
+            </dataSource>
+        </environment>
+
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+<!--    一定要导入相关的mapper-->
+    <mappers>
+        <mapper resource="com/sun/mapper/StudentMapper.xml"/>
+        <mapper resource="com/sun/mapper/TeacherMapper.xml"/>
+    </mappers>
+</configuration>

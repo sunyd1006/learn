@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="cmake04_lib" targetName="hello" />
+      <config projectName="cmake04_lib" targetName="hello_static" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="be5b7e24-b62f-4789-b8d0-02a5cc53d045" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmake01_hello/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake01_hello/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake02_src/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake02_src/src/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake02_src/src/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/COPYRIGHT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/README" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/doc/hello.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/run_hello.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/src/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake03_install/src/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake04_lib/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake04_lib/lib/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake04_lib/lib/hello.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake04_lib/lib/hello.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake05_uselib/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake05_uselib/src/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake05_uselib/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-examples/01-basic/A-hello-cmake/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-examples/01-basic/A-hello-cmake/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-examples/01-basic/B-hello-headers/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-examples/01-basic/B-hello-headers/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-examples/01-basic/B-hello-headers/src/Hello.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-examples/01-basic/B-hello-headers/src/Hello.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test_python_tmp/compact_pic_50.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/cmake-examples" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="28akK3ea9rtcxMwLnU8yQe1GXET" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmake05_uselib" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmake05_uselib" />
+      <recent name="$PROJECT_DIR$/cmake04_static/other" />
+      <recent name="$PROJECT_DIR$/cmake04_static" />
+      <recent name="$PROJECT_DIR$/cmake03_install/doc" />
+      <recent name="$PROJECT_DIR$/cmake03_install" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/cmake04_static" />
+      <recent name="$PROJECT_DIR$/cmake03_install" />
+      <recent name="$PROJECT_DIR$/cmake01" />
+      <recent name="$PROJECT_DIR$/cmake01/src/other" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.cmake01_hello">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cmake01_hello" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$/cmake01_hello" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="cmake01_hello" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="hello" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmake04_lib" TARGET_NAME="hello" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="hello_static" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmake04_lib" TARGET_NAME="hello_static" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.cmake01_hello" />
+      <item itemvalue="CMake Application.hello" />
+      <item itemvalue="CMake Application.hello_static" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be5b7e24-b62f-4789-b8d0-02a5cc53d045" name="Default Changelist" comment="" />
+      <created>1651462016787</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651462016787</updated>
+      <workItem from="1651462017976" duration="4409000" />
+      <workItem from="1651472498084" duration="470000" />
+      <workItem from="1651473013706" duration="962000" />
+      <workItem from="1651474114301" duration="505000" />
+      <workItem from="1651484260987" duration="359000" />
+      <workItem from="1651484672784" duration="16792000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/cmake01_hello/main.cpp</url>
+          <line>14</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

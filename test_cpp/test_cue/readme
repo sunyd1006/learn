@@ -1,0 +1,37 @@
+
+
+# 参考教程：https://kubevela.io/zh/docs/next/platform-engineers/cue/basic#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA-cue-%E6%A8%A1%E6%9D%BF
+
+# ex1 
+cue eval ex1_helloworld.cue
+cue eval -e b ex1_helloworld.cue
+cue export ex1_helloworld.cue
+cue export ex1_helloworld.cue --out yaml
+
+
+# ex2
+验证代码
+cue vet ex2_defineVar.cue
+
+# ex3 template
+cue export ex3_template.cue -e template --out yaml
+
+
+# ex4 
+cue eval ex4_moreExpression.cue --out yaml
+
+对象开放...、默认值变量、可选变量、if变量跳过可选变量
+```cue
+{
+  abc: string   
+  ...
+}
+a: *1 | int
+a ?: int
+if parameter.config != _|_ {
+```
+
+
+# ex5 include packages
+
+# ex5 include out-packages

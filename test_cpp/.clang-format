@@ -1,0 +1,39 @@
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+Language: Cpp
+BasedOnStyle: Google
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align               # com: DontAlign
+AlignOperands: false
+ColumnLimit: 95                            # com: 90
+ConstructorInitializerIndentWidth: 8       # com： 8
+ContinuationIndentWidth: 4                 # com: 8
+DerivePointerAlignment: false
+IncludeCategories:
+- Priority: 1
+  Regex: '^<'                              # Like <vector>
+- Priority: 2
+  Regex: '^"'                              # Like "static.h"
+IndentWidth: 4
+SpacesBeforeTrailingComments: 1
+Standard: c++11
+
+# 自定义的换行符控制
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterClass: true
+    AfterStruct: true
+    AfterEnum: true
+    AfterFunction: true
+    SplitEmptyRecord: false
+    SplitEmptyFunction: false
+    SplitEmptyNamespace: false
+
+# 自定义的其他配置
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AlwaysBreakTemplateDeclarations: Yes
+AllowShortLambdasOnASingleLine: Empty
+SpaceBeforeCpp11BracedList: true
+AlignArrayOfStructures: None

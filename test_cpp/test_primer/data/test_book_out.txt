@@ -1,0 +1,8 @@
+Item: isbn: isbn000001 unitsSold: 20 revenue: 200
+
+Item: isbn: isbn000002 unitsSold: 60 revenue: 1200
+
+Item: isbn: isbn000001 unitsSold: 20 revenue: 200
+
+Item: isbn: isbn000002 unitsSold: 60 revenue: 1200
+

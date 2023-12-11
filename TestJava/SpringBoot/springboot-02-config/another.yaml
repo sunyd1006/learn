@@ -1,0 +1,19 @@
+
+
+# SpringBoot 官方推荐使用 Yaml配置
+server:
+  port: 8082
+
+person:
+  name: sunhao
+  age: 3
+  happy: false
+  birth: 2019/11/02
+  maps: {k1:v1, k2:v2}
+  list:
+    - code
+    - music
+    - girl
+  dog:
+    name: dog_name
+    age: 3

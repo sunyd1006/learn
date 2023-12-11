@@ -1,0 +1,114 @@
+Classfile /Users/sunyindong/Downloads/quit/ShuaTi/src/main/java/com/javaguide/threadpool/AtomicIntegerDemo.class
+  Last modified 2021-3-24; size 809 bytes
+  MD5 checksum 34f58ceb7a0e3f35456aff12234bf3b7
+  Compiled from "AtomicIntegerDemo.java"
+public class com.javaguide.threadpool.AtomicIntegerDemo
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #9.#25         // java/lang/Object."<init>":()V
+   #2 = Class              #26            // java/util/concurrent/atomic/AtomicInteger
+   #3 = Methodref          #2.#25         // java/util/concurrent/atomic/AtomicInteger."<init>":()V
+   #4 = Fieldref           #11.#27        // com/javaguide/threadpool/AtomicIntegerDemo.count:Ljava/util/concurrent/atomic/AtomicInteger;
+   #5 = Methodref          #2.#28         // java/util/concurrent/atomic/AtomicInteger.incrementAndGet:()I
+   #6 = Methodref          #2.#29         // java/util/concurrent/atomic/AtomicInteger.get:()I
+   #7 = Fieldref           #30.#31        // java/lang/System.out:Ljava/io/PrintStream;
+   #8 = String             #32            // haha
+   #9 = Class              #33            // java/lang/Object
+  #10 = Methodref          #34.#35        // java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+  #11 = Class              #36            // com/javaguide/threadpool/AtomicIntegerDemo
+  #12 = Utf8               count
+  #13 = Utf8               Ljava/util/concurrent/atomic/AtomicInteger;
+  #14 = Utf8               <init>
+  #15 = Utf8               ()V
+  #16 = Utf8               Code
+  #17 = Utf8               LineNumberTable
+  #18 = Utf8               increment
+  #19 = Utf8               getCount
+  #20 = Utf8               ()I
+  #21 = Utf8               main
+  #22 = Utf8               ([Ljava/lang/String;)V
+  #23 = Utf8               SourceFile
+  #24 = Utf8               AtomicIntegerDemo.java
+  #25 = NameAndType        #14:#15        // "<init>":()V
+  #26 = Utf8               java/util/concurrent/atomic/AtomicInteger
+  #27 = NameAndType        #12:#13        // count:Ljava/util/concurrent/atomic/AtomicInteger;
+  #28 = NameAndType        #37:#20        // incrementAndGet:()I
+  #29 = NameAndType        #38:#20        // get:()I
+  #30 = Class              #39            // java/lang/System
+  #31 = NameAndType        #40:#41        // out:Ljava/io/PrintStream;
+  #32 = Utf8               haha
+  #33 = Utf8               java/lang/Object
+  #34 = Class              #42            // java/io/PrintStream
+  #35 = NameAndType        #43:#44        // printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+  #36 = Utf8               com/javaguide/threadpool/AtomicIntegerDemo
+  #37 = Utf8               incrementAndGet
+  #38 = Utf8               get
+  #39 = Utf8               java/lang/System
+  #40 = Utf8               out
+  #41 = Utf8               Ljava/io/PrintStream;
+  #42 = Utf8               java/io/PrintStream
+  #43 = Utf8               printf
+  #44 = Utf8               (Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+{
+  public com.javaguide.threadpool.AtomicIntegerDemo();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: new           #2                  // class java/util/concurrent/atomic/AtomicInteger
+         8: dup
+         9: invokespecial #3                  // Method java/util/concurrent/atomic/AtomicInteger."<init>":()V
+        12: putfield      #4                  // Field count:Ljava/util/concurrent/atomic/AtomicInteger;
+        15: return
+      LineNumberTable:
+        line 5: 0
+        line 6: 4
+
+  public void increment();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #4                  // Field count:Ljava/util/concurrent/atomic/AtomicInteger;
+         4: invokevirtual #5                  // Method java/util/concurrent/atomic/AtomicInteger.incrementAndGet:()I
+         7: pop
+         8: return
+      LineNumberTable:
+        line 9: 0
+        line 10: 8
+
+  public int getCount();
+    descriptor: ()I
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #4                  // Field count:Ljava/util/concurrent/atomic/AtomicInteger;
+         4: invokevirtual #6                  // Method java/util/concurrent/atomic/AtomicInteger.get:()I
+         7: ireturn
+      LineNumberTable:
+        line 13: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;
+         3: ldc           #8                  // String haha
+         5: iconst_0
+         6: anewarray     #9                  // class java/lang/Object
+         9: invokevirtual #10                 // Method java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+        12: pop
+        13: return
+      LineNumberTable:
+        line 17: 0
+        line 18: 13
+}
+SourceFile: "AtomicIntegerDemo.java"

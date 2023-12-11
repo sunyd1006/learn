@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.mapper.BlogMapper">
+    <insert id="addBlog" parameterType="Blog">
+        insert into mybatis.blog(id, title, author, create_time, views)
+        values(#{id}, #{title},  #{author},  #{createTime},  #{views});
+<!--        注意：驼峰映射 createTime 和 create_time =======================-->
+    </insert>
+
+    <select id="queryBlogByIf" parameterType="map" resultType="Blog">
+        select * from blog where 1=1
+        <if test="title!=null">
+           and  title = #{title}
+        </if>
+        <if test="author!=null">
+          and  author = #{author}
+        </if>
+    </select>
+
+<!--    包含：<where> 等等标签的
+    select * from mybatis.blog where (id='1' or id='2' or id='3');
+    ids: 是一个集合ArrayList
+-->
+    <select id="queryByForEach" parameterType="map" resultType="Blog">
+        select * from mybatis.blog
+        <where>
+            <foreach collection="ids" open="(" close=")" separator="or" item="id">
+                id= #{id}
+            </foreach>
+        </where>
+    </select>
+</mapper>
