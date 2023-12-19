@@ -24,5 +24,4 @@ deploy_key_rsa
 
 # tmp file
 *.swp
-
-#
+TestJava/GradleLearn/bin/

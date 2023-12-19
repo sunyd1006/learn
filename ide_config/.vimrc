@@ -26,7 +26,7 @@ nnoremap cn :cnext
 nnoremap cp :cprev
 
 " ==== 清空quicklist
-nnoremap cqf :call setqflist([])<cr>
+nnoremap cql :call setqflist([])<cr>
 nnoremap cll :call setloclist(0, [])<CR>
 
 

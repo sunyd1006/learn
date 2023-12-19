@@ -9,7 +9,9 @@ import thread_pattern.event_driven_model.base.BaseEventEnum;
 import thread_pattern.event_driven_model.event.AsyncDispatcher;
 
 /**
- * 参考：https://github.com/rectcircle/java-event-driver-learn/tree/master/src/main/java/cn/rectcircle/learn/main
+ * 讲解：https://www.rectcircle.cn/posts/java-event-driver-model-impl/
+ * code：https://github.com/rectcircle/java-event-driver-learn/tree/master/src/main/java/cn/rectcircle/learn/main
+ *
  * 泛型参考：https://pdai.tech/md/java/basic/java-basic-x-generic.html
  *
  */

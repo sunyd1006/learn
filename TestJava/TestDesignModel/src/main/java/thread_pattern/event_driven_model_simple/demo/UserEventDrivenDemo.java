@@ -17,8 +17,6 @@ import thread_pattern.event_driven_model_simple.EventDispatcher;
  * <li>如果消息线程要求事件被同步处理, 则消息线程调用 instance.dispatchEvent(), 进一步就调用了 handler， 即 dispatchEvent {handler} </li>
  * <li>如果消息线程不要求事件被同步处理, 则会由 Dispatcher内部的worker-thread 异步调用 handler 方法</li>
  * 4. dispatcher 可以开始，也可以被关闭（调用dispatcher.stop)
- *
- * @author sunyindong.syd
  */
 public class UserEventDrivenDemo {
 
