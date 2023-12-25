@@ -4,13 +4,10 @@ package com.mockito.v3_mock;
 import com.mockito.common.Account;
 import com.mockito.common.AccountDao;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.mock;
 
-@RunWith(MockitoJUnitRunner.class)
 public class Test01_MockByRunnerTest {
 	
 	@Test
