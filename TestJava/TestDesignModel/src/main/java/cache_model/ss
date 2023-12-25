@@ -1,0 +1,209 @@
+package com.aliyun.odps.metering.center.utils;
+
+import com.aliyun.odps.metering.center.exception.ExType;
+import com.aliyun.odps.metering.center.exception.ExceptionBase;
+import com.google.common.collect.Lists;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.*;
+
+@Slf4j
+@Data
+@NoArgsConstructor
+public abstract class BatchRefreshCache<K, V> {
+  @Data
+  public static class Config {
+    long cacheSizeLimit = 100;
+    long expireAfterWriteInMs = 5 * 1000L;
+
+    // refresh config
+    long maxRefreshBatchSize = 100;
+    int maxRefreshThreadSize = 2;
+    long refreshIntervalMs = 5 * 1000L;
+
+    // NOTE: Equivalent to refreshBeforeExpiryInMs
+    int randomAdvanceRefreshTimeMs = 1000;
+    long stopRefreshAfterLastAccessMs = expireAfterWriteInMs * 10;
+  }
+
+  protected Config config;
+
+  Map<K, CacheValue<V>> cacheMap = new ConcurrentHashMap<>();
+  volatile boolean running = true;
+  Thread refresher = new Thread(this::autoRefreshTask, "autoRefreshTask");
+  ConcurrentLinkedQueue<K> refreshBuffer = new ConcurrentLinkedQueue<>();
+  ExecutorService workers;
+
+
+  public BatchRefreshCache(Config config) {
+    this.config = config;
+  }
+
+  public void start() throws ExceptionBase {
+    checkConfig();
+    refresher.start();
+    workers = new ThreadPoolExecutor(config.getMaxRefreshThreadSize(),
+      config.getMaxRefreshThreadSize(),
+      config.getStopRefreshAfterLastAccessMs(),
+      TimeUnit.MILLISECONDS,
+      new LinkedBlockingQueue<>()
+    );
+    log.info("BatchRefreshCache is running, config: {}", JsonUtil.serialize(config, ""));
+  }
+
+  void checkConfig() throws ExceptionBase {
+    StringBuilder errorMsg = new StringBuilder();
+    if (config.getRefreshIntervalMs() <= config.getRandomAdvanceRefreshTimeMs()) {
+      errorMsg.append("RefreshIntervalMs should be greater than RandomAdvanceRefreshTimeMs");
+    }
+
+    if (errorMsg.length() > 0) {
+      throw new ExceptionBase(ExType.FATAL_ERROR, errorMsg.toString());
+    }
+  }
+
+  public void shutdown() {
+    running = false;
+    ThreadUtil.safeStopThread(refresher, "close");
+    ThreadUtil.safeShutdownPool(workers, "close");
+    log.info("BatchRefreshCache is closed, config: {}", JsonUtil.serialize(config, ""));
+  }
+
+  private void autoRefreshTask() {
+    while (running) {
+      try {
+        if (log.isDebugEnabled()) {
+          log.debug("AutoRefreshTask refresh once ");
+        }
+
+        // remove cold entries
+        cacheMap.keySet().removeIf(key -> cacheMap.get(key).shouldStopRefresh());
+
+        // refresh entries which is going to expire.
+        for (Map.Entry<K, CacheValue<V>> entry : cacheMap.entrySet()) {
+          if (entry.getValue().isGoingToExpire() && !entry.getValue().shouldStopRefresh()) {
+            refreshBuffer.add(entry.getKey());
+          }
+        }
+        while (!refreshBuffer.isEmpty()) {
+          List<K> oneBatch = Lists.newLinkedList();
+          for (int i = 0; i < config.getMaxRefreshBatchSize(); i++) {
+            K key = refreshBuffer.poll();
+            if (key == null) {
+              break;
+            }
+            oneBatch.add(key);
+          }
+          if (!oneBatch.isEmpty()) {
+            workers.submit(() -> refreshCacheFromRemoteBatch(oneBatch));
+          }
+        }
+
+        long advanceMs = RandomUtil.randomLong(0, config.getRandomAdvanceRefreshTimeMs());
+        sleepTo(getCurrentTimeMs() + config.getRefreshIntervalMs() - advanceMs, "cacheRefreshInterval");
+      } catch (Exception ignored) {
+        log.error("Refreshing background error", ignored);
+      }
+    }
+  }
+
+  private void sleepTo(long sleepToMs, String reason) {
+    while (sleepToMs > getCurrentTimeMs()) {
+      ThreadUtil.safeSleep(Math.min(500, sleepToMs - getCurrentTimeMs()), reason);
+    }
+  }
+
+  public void put(K key, V value) {
+    if (cacheMap.size() > config.getCacheSizeLimit()) {
+      evictLeastRecentlyUsed();
+    }
+    CacheValue<V> entry = cacheMap.getOrDefault(key, new CacheValue<>(value));
+    entry.touch(value);
+    cacheMap.put(key, entry);
+  }
+
+  public void evict(K key) {
+    cacheMap.remove(key);
+  }
+
+  private void evictLeastRecentlyUsed() {
+    K keyToRemove = null;
+    long earliestTime = Long.MAX_VALUE;
+    for (Map.Entry<K, CacheValue<V>> entry : cacheMap.entrySet()) {
+      if (entry.getValue().getLastAccessTimeMs() < earliestTime) {
+        earliestTime = entry.getValue().getLastAccessTimeMs();
+        keyToRemove = entry.getKey();
+      }
+    }
+    if (keyToRemove != null) {
+      cacheMap.remove(keyToRemove);
+    }
+  }
+
+  public V get(K key) {
+    return get(key, true);
+  }
+
+  public V get(K key, boolean readRemoteSync) {
+    CacheValue<V> cacheValue = cacheMap.get(key);
+    if (cacheValue != null && !cacheValue.isExpired()) {
+      cacheValue.setLastAccessTimeMs(getCurrentTimeMs());
+      return cacheValue.getValue();
+    } else if (readRemoteSync) {
+      refreshFromRemote(key);
+      return get(key, false);
+    }
+    return null;
+  }
+
+  public void refreshFromRemote(@NonNull K key) {
+    refreshCacheFromRemoteBatch(Lists.newArrayList(key));
+  }
+
+  /**
+   * @param keys keys needs to be refreshed and cached.
+   */
+  abstract public void refreshCacheFromRemoteBatch(@NonNull List<K> keys);
+
+  public long getCurrentTimeMs() {
+    return System.currentTimeMillis();
+  }
+
+  @Data
+  private class CacheValue<V> {
+    V value;
+    long createTimeMs;
+    long expireTimeMs;
+    long lastAccessTimeMs;
+
+    public CacheValue(V value) {
+      this.lastAccessTimeMs = getCurrentTimeMs();
+      touch(value);
+    }
+
+    // update cache but not create cache
+    public void touch(V value) {
+      this.value = value;
+      this.createTimeMs = getCurrentTimeMs();
+      this.expireTimeMs = createTimeMs + config.getExpireAfterWriteInMs();
+    }
+
+    public boolean isExpired() {
+      return getCurrentTimeMs() >= expireTimeMs;
+    }
+
+    public boolean isGoingToExpire() {
+      return getCurrentTimeMs() + config.getRandomAdvanceRefreshTimeMs() >= expireTimeMs;
+    }
+
+    boolean shouldStopRefresh() {
+      return getCurrentTimeMs() >= lastAccessTimeMs + config.getStopRefreshAfterLastAccessMs();
+    }
+  }
+}
+
