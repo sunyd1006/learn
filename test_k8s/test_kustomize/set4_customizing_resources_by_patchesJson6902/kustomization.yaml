@@ -1,0 +1,11 @@
+resources:
+- deployment.yaml
+
+# patch 会用于替换对应文件里面的内容
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: my-nginx
+  path: patch.yaml
