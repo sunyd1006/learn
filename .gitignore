@@ -18,3 +18,9 @@ deploy_key_rsa
 
 # tmp file content
 .vscode/
+
+
+### tmp java project file
+**/.idea/**
+**/code.iml
+tmp/out/**
