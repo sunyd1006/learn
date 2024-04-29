@@ -25,11 +25,10 @@ public class BatchRefreshCacheTest {
   long currentTimeMs = 1000;
 
   @BeforeEach
-  public void setUp() {
+  public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
 
-    when(mockConfig.getCacheSizeLimit()).thenReturn(10);
-    when(mockConfig.getRefreshBeforeExpiryInMs()).thenReturn(2 * 1000L);
+    when(mockConfig.getCacheSizeLimit()).thenReturn(10L);
     when(mockConfig.getExpireAfterWriteInMs()).thenReturn(5 * 1000L);
 
     when(mockConfig.getMaxRefreshBatchSize()).thenReturn(10L);

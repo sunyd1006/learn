@@ -1,16 +1,16 @@
 package cache_model;
 
 import com.beust.jcommander.internal.Lists;
+import com.learn.util.JsonUtil;
 import com.learn.util.ThreadUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.mockito.Mockito;
 
-import java.io.Closeable;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.*;
 
 /**
@@ -58,7 +58,7 @@ public abstract class BatchRefreshCache<K, V> {
     this.config = config;
   }
 
-  public void start() throws ExceptionBase {
+  public void start() throws Exception {
     checkConfig();
     refresher.start();
     workers = new ThreadPoolExecutor(config.getMaxRefreshThreadSize(),
@@ -70,14 +70,14 @@ public abstract class BatchRefreshCache<K, V> {
     log.info("BatchRefreshCache is running, config: {}", JsonUtil.serialize(config, ""));
   }
 
-  void checkConfig() throws ExceptionBase {
+  void checkConfig() throws Exception {
     StringBuilder errorMsg = new StringBuilder();
     if (config.getRefreshIntervalMs() <= config.getRandomAdvanceRefreshTimeMs()) {
       errorMsg.append("RefreshIntervalMs should be greater than RandomAdvanceRefreshTimeMs");
     }
 
     if (errorMsg.length() > 0) {
-      throw new ExceptionBase(ExType.FATAL_ERROR, errorMsg.toString());
+      throw new Exception(errorMsg.toString());
     }
   }
 
@@ -114,12 +114,17 @@ public abstract class BatchRefreshCache<K, V> {
           }
         }
 
-        long advanceMs = RandomUtil.randomLong(0, config.getRandomAdvanceRefreshTimeMs());
+        long advanceMs = randomLong(0, config.getRandomAdvanceRefreshTimeMs());
         sleepTo(getCurrentTimeMs() + config.getRefreshIntervalMs() - advanceMs, "cacheRefreshInterval");
       } catch (Exception ignored) {
         log.error("Refreshing background error", ignored);
       }
     }
+  }
+
+  static Random random = new Random();
+  public static long randomLong(int min, int max) {
+      return random.nextInt(max) + min;
   }
 
   private void sleepTo(long sleepToMs, String reason) {
