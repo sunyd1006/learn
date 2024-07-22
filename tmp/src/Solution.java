@@ -24,7 +24,7 @@ public class Solution {
 
         HashSet<ClassEntity> visited = new HashSet<>();
         LinkedList<ClassEntity> traces = new LinkedList<>();
-        ClassEntity.getClassEntity();
+//        ClassEntity.getClassEntity();
     }
 
     boolean canLearn;

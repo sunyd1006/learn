@@ -1,5 +1,5 @@
 {
-    /* 
+    /*
         c_cpp_properties.json 配置文件
         https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference
         https://blog.csdn.net/qq_34801642/article/details/106419763
@@ -39,7 +39,7 @@
             "cStandard": "gnu11",
             "cppStandard": "c++11",
             // Linux: gcc-x64; macOs: clang-x64
-            "intelliSenseMode": "gcc-x64", 
+            "intelliSenseMode": "gcc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
