@@ -134,7 +134,7 @@ class ThreadPool extends Executer {
           }
 
           /**
-           * done 因为可能被唤醒时，是isRuning false, 而不是 taskQueue 有东西
+           * done 因为可能被唤醒时，是isRunning false, 而不是 taskQueue 有东西
            * easy error: 为什么还要判断 taskQueue 非空?：
            * 获取任务，注意：要在同步代码块里面获取任务。
            */
