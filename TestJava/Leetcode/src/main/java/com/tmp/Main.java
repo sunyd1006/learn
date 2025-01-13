@@ -1,7 +1,7 @@
 package com.tmp;
 
-import com.TreeNode;
-import org.aspectj.weaver.StandardAnnotation;
+import com.datastruct.Util;
+import com.datastruct.leetcode.TreeNode;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -177,9 +177,8 @@ public class Main {
 	public void test4() {
 		int[][] ints = {
 						{1, 2}, {2, 3}, {1, 7}};
-		TreeNode treeNode = TreeNode.buildTree(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+		TreeNode treeNode = Util.buildBinaryTree(new Integer[]{1, 2, 3, 4, 5, 6, 7});
 		TreeNode resNode = solve(treeNode, ints);
-		
 	}
 	
 	// --------------------

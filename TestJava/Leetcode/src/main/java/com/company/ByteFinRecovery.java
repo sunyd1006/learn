@@ -1,7 +1,7 @@
 package com.company;
 
 
-import com.ListNode;
+import com.datastruct.leetcode.ListNode;
 import org.junit.Test;
 
 public class ByteFinRecovery {
