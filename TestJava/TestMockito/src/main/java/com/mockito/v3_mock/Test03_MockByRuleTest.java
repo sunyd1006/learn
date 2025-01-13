@@ -12,13 +12,13 @@ import org.mockito.junit.MockitoRule;
 import static org.mockito.Mockito.mock;
 
 public class Test03_MockByRuleTest {
-	
+
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();
-	
+
 	@Mock
 	private AccountDao accountDao;
-	
+
 	@Test
 	public void testMock() {
 		AccountDao accountDao = Mockito.mock(AccountDao.class);

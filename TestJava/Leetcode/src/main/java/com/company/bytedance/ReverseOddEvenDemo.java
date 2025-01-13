@@ -1,7 +1,8 @@
 package com.company.bytedance;
 
 
-import com.ListNode;
+import com.datastruct.Util;
+import com.datastruct.leetcode.ListNode;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,30 +13,30 @@ import org.junit.jupiter.api.Test;
  * </p>
  */
 public class ReverseOddEvenDemo {
-	
+
 	@Test
 	public void test() {
-		ListNode head = ListNode.buildListNode(new int[]{1, 8, 3, 6, 5, 4, 7, 2});
-		ListNode.printListNode(head);
+		ListNode head = Util.buildListNode(new int[]{1, 8, 3, 6, 5, 4, 7, 2});
+		Util.printListNode(head);
 		ListNode even = reverseOddEven(head);
-		ListNode.printListNode(even);
+		Util.printListNode(even);
 	}
-	
+
 	public ListNode reverseOddEven(ListNode head) {
 		if (head == null || head.next == null) {
 			return head;
 		}
-		
+
 		ListNode oddHead = head, evenHead = head.next;
 		ListNode odd = oddHead, even = evenHead;
 		while (odd != null && even != null) {
 			odd.next = even.next;
 			even.next = odd.next != null ? odd.next.next : null;
-			
+
 			odd = odd.next;
 			even = even.next;
 		}
-		
+
 		ListNode newEvenHead = reverseList(evenHead);
 		odd = oddHead;
 		even = newEvenHead;
@@ -54,7 +55,7 @@ public class ReverseOddEvenDemo {
 		p.next = odd != null ? odd : even;
 		return resFake.next;
 	}
-	
+
 	public ListNode reverseList(ListNode head) {
 		if (head == null || head.next == null) {
 			return head;

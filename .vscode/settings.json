@@ -51,6 +51,7 @@
         "iosfwd": "cpp",
         "iostream": "cpp",
         "istream": "cpp",
+        "iterator": "cpp",
         "limits": "cpp",
         "list": "cpp",
         "locale": "cpp",

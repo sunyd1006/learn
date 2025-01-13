@@ -28,3 +28,12 @@ TestJava/GradleLearn/bin/
 *.swp
 .idea/
 *lh
+
+# tmp file content
+*.out
+
+### tmp java project file
+**/.idea/**
+**/code.iml
+tmp/out/**
+**/**.dSYM/Contents

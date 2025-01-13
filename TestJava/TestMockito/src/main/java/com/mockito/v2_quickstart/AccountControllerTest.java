@@ -16,7 +16,7 @@ public class AccountControllerTest {
 	private AccountDao accountDao;
 	private HttpServletRequest request;
 	private AccountLoginController accountLoginController;
-	
+
 	@BeforeEach
 	public void setUp() {
 		this.accountDao = Mockito.mock(AccountDao.class);
@@ -29,26 +29,26 @@ public class AccountControllerTest {
 		Account account = new Account();
 		when(request.getParameter("username")).thenReturn("alex");
 		when(request.getParameter("password")).thenReturn("123123");
-		
+
 		String result;
-		
+
 		// controller.login() with login
 		when(accountDao.findAccount(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn(null);
 		 result = accountLoginController.login(request);
 		Assertions.assertEquals(result, "/login");
-	
+
 		// controller.login() with index
 		when(accountDao.findAccount(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn(account);
 		result = accountLoginController.login(request);
 		Assertions.assertEquals(result, "/index");
-		
-		
+
+
 		// controller.login() with exception
 		when(accountDao.findAccount(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenThrow(UnsupportedOperationException.class);
 		result = accountLoginController.login(request);
 		Assertions.assertEquals(result, "/505");
 	}
 
-	
-	
+
+
 }

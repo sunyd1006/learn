@@ -1,4 +1,4 @@
 # !/bin/bash
 
-git grep -n -e "dong.syd" --or -e "栋" ./*
+git grep -n -e "yindong" --or -e "寅" ./*
 

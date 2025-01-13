@@ -6,12 +6,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 class UserThreadFactory implements ThreadFactory {
 	private final String namePrefix;
 	private final AtomicInteger nextId = new AtomicInteger(1);
-	
+
 	// 定义线程组名称，在 jstack 问题排查时，非常有帮助
 	UserThreadFactory(String whatFeaturOfGroup) {
 		namePrefix = "[ UserThreadFactory " + whatFeaturOfGroup + "-Worker-";
 	}
-	
+
 	@Override
 	public Thread newThread(Runnable task) {
 		String name = namePrefix + nextId.getAndIncrement() + " ]";
@@ -34,7 +34,7 @@ public class ThreadPoolUsingDemo {
 						3, 2000, TimeUnit.SECONDS, new LinkedBlockingDeque<>(),
 						new UserThreadFactory("testDemo"),
 						new ThreadPoolExecutor.AbortPolicy());
-		
+
 		PrintNumAtSameTime_CyclicBarrier demoCyc = new PrintNumAtSameTime_CyclicBarrier();
 		for (int i = 1; i < 4; i++) {
 			int num = i;
@@ -46,24 +46,21 @@ public class ThreadPoolUsingDemo {
 				}
 			});
 		}
-		
 		pool.shutdown();
 	}
 }
 
 class PrintNumAtSameTime_CyclicBarrier {
 	CyclicBarrier startCyc, endCyc;
-	
+
 	PrintNumAtSameTime_CyclicBarrier() {
 		startCyc = new CyclicBarrier(3, () -> {
 			System.out.println("all start!");
 		});
-		
 		endCyc = new CyclicBarrier(3, () -> {
 			System.out.println("all end!");
 		});
 	}
-	
 	public void printNum(int x) throws InterruptedException, BrokenBarrierException {
 		startCyc.await();
 		System.out.println(Thread.currentThread().getName() + " " + x);

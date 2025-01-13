@@ -16,17 +16,17 @@ import static org.junit.Assert.fail;
 // @RunWith(MockitoJUnitRunner.class)
 public class StubbingTest {
 	private List<String> list;
-	
+
 	@BeforeEach
 	public void init_like_cpp_TearUp() {
 		this.list = Mockito.mock(ArrayList.class);
 	}
-	
+
 	@Test
 	public void howToUseStubbing() {
 		Mockito.when(list.get(0)).thenReturn("first");
 		Assertions.assertEquals(list.get(0), "first");
-		
+
 		Mockito.when(list.get(ArgumentMatchers.anyInt())).thenThrow(RuntimeException.class);
 		try {
 			list.get(0);
@@ -36,7 +36,7 @@ public class StubbingTest {
 			Assertions.assertEquals(e.getClass(), RuntimeException.class);
 		}
 	}
-	
+
 	@Test
 	public void howToUseSubbingVoidMethod() {
 		Mockito.doNothing().when(list).clear();
@@ -50,14 +50,14 @@ public class StubbingTest {
 			Assertions.assertEquals(e.getClass(), RuntimeException.class);
 		}
 	}
-	
-	
+
+
 	@Test
 	public void stubbingDoReturn() {
 		// 以下两行写法等价
 		Mockito.when(list.get(0)).thenReturn("first");
 		Mockito.doReturn("second").when(list).get(1);
-		
+
 		Assertions.assertEquals(list.get(0), "first");
 		Assertions.assertEquals(list.get(1), "second");
 	}
@@ -79,7 +79,7 @@ public class StubbingTest {
 		// 		return String.valueOf(index * 10);
 		// 	}
 		// });
-		
+
 		// when(list.get(anyInt())).thenAnswer(invocationOnMock -> {
 		// 	Integer index = invocationOnMock.getArgumentAt(0, Integer.class);
 		// 	return String.valueOf(index * 10);
@@ -87,17 +87,17 @@ public class StubbingTest {
 		// Assertions.assertEquals(list.get(0), "0");
 		// Assertions.assertEquals(list.get(888), "8880");
 	}
-	
+
 	@Test
 	public void stubbingWithRealCall() {
 		StubbingService service = Mockito.mock(StubbingService.class);
 		Mockito.when(service.runStubbingMethod()).thenReturn("stubbing----------Method");
 		Assertions.assertEquals(service.runStubbingMethod(), "stubbing----------Method");
-		
+
 		Mockito.when(service.runRealMethod()).thenCallRealMethod();
 		Assertions.assertEquals(service.runRealMethod(), "runRealMethod");
 	}
-	
+
 	@AfterEach
 	public void destroy_like_cpp_TearDown() {
 		Mockito.reset(this.list);

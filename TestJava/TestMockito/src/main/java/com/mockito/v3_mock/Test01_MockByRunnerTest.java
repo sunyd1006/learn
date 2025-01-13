@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 
 public class Test01_MockByRunnerTest {
-	
+
 	@Test
 	public void testMock() {
 		AccountDao accountDao = mock(AccountDao.class, Mockito.RETURNS_SMART_NULLS);

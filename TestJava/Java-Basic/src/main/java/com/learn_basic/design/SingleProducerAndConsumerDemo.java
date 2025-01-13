@@ -8,7 +8,6 @@ public class SingleProducerAndConsumerDemo {
     private static AtomicInteger atomicInteger = new AtomicInteger();
     private final int MAX_LEN = 10;
     private Queue<Integer> queue = new LinkedList<Integer>();
-
     class Producer extends Thread {
         @Override
         public void run() {
@@ -41,7 +40,6 @@ public class SingleProducerAndConsumerDemo {
             }
         }
     }
-
     class Consumer extends Thread {
         @Override
         public void run() {
