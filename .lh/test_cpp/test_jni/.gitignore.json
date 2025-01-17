@@ -1,0 +1,22 @@
+{
+    "sourceFile": "test_cpp/test_jni/.gitignore",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1717666263930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717666381241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,4 @@\n \n-\n-\n *.class\n *.dylib\n *.so\n"
+                }
+            ],
+            "date": 1717666263930,
+            "name": "Commit-0",
+            "content": "\n\n\n*.class\n*.dylib\n*.so\n"
+        }
+    ]
+}
