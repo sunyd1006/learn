@@ -1,0 +1,42 @@
+{
+    "sourceFile": "test_cpp/test_jni/run.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1717666102330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717666132785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,12 @@\n \n \n dir=`cd \"$(dirname \"$0\")\"; pwd`\n \n+# step1: create java class and generate java header\n javac Example.java\n javah -jni Example\n \n-\n g++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.so\n g++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.dylib\n \n java -Djava.library.path=. Example\n"
+                },
+                {
+                    "date": 1717666202068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,13 @@\n \n \n dir=`cd \"$(dirname \"$0\")\"; pwd`\n \n-# step1: create java class and generate java header\n+# step1: create java class and generate java Exmpale.h\n javac Example.java\n javah -jni Example\n \n+# step2: write cpp classs and implements Java_Example_nativeMethod\n g++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.so\n g++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.dylib\n \n java -Djava.library.path=. Example\n"
+                },
+                {
+                    "date": 1717666211822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,9 @@\n # step2: write cpp classs and implements Java_Example_nativeMethod\n g++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.so\n g++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.dylib\n \n+# step3: run java code\n java -Djava.library.path=. Example\n \n \n+\n"
+                },
+                {
+                    "date": 1717666443014,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n \n \n \n dir=`cd \"$(dirname \"$0\")\"; pwd`\n+cd $dir\n+echo 'working dir: ${dir}'\n \n # step1: create java class and generate java Exmpale.h\n javac Example.java\n javah -jni Example\n"
+                },
+                {
+                    "date": 1717666451301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n \n \n \n-dir=`cd \"$(dirname \"$0\")\"; pwd`\n+dir=`cd \"$(dirname \"$0\")\" pwd`\n cd $dir\n echo 'working dir: ${dir}'\n \n # step1: create java class and generate java Exmpale.h\n"
+                },
+                {
+                    "date": 1717666463780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n \n \n \n-dir=`cd \"$(dirname \"$0\")\" pwd`\n+dir=`cd \"$(dirname \"$0\")\" && pwd`\n cd $dir\n-echo 'working dir: ${dir}'\n+echo \"working dir: ${dir}\"\n \n # step1: create java class and generate java Exmpale.h\n javac Example.java\n javah -jni Example\n"
+                }
+            ],
+            "date": 1717666102330,
+            "name": "Commit-0",
+            "content": "\n\n\ndir=`cd \"$(dirname \"$0\")\"; pwd`\n\njavac Example.java\njavah -jni Example\n\n\ng++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.so\ng++ -shared -fPIC -I\"${JAVA_HOME}/include\" -I\"${JAVA_HOME}/include/linux\" example.cpp -o libexample.dylib\n\njava -Djava.library.path=. Example\n\n\n"
+        }
+    ]
+}

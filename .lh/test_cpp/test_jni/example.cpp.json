@@ -1,0 +1,18 @@
+{
+    "sourceFile": "test_cpp/test_jni/example.cpp",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717665432676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717665432676,
+            "name": "Commit-0",
+            "content": "// example.cpp\n#include <jni.h>\n#include <iostream>\n#include \"Example.h\"\n\nusing namespace std;\n\nJNIEXPORT void JNICALL Java_Example_nativeMethod(JNIEnv *env, jobject obj) {\n    cout << \"This is a message from C++!\" << endl;\n\n    // 获取对象的类\n    jclass cls = env->GetObjectClass(obj);\n\n    // 查找回调方法的ID\n    jmethodID mid = env->GetMethodID(cls, \"callback\", \"()V\");\n    if(mid == nullptr) return; // 方法未找到\n\n    // 调用Java回调方法\n    env->CallVoidMethod(obj, mid);\n}\n"
+        }
+    ]
+}
