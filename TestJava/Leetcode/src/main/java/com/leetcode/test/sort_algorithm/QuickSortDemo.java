@@ -8,14 +8,14 @@ public class QuickSortDemo {
 		// for (int i : nums) {
 		// 	System.out.print(i + " ");
 		// }
-		
+
 		int[] nums2 = new int[]{1, 1, 2, 3, 2, 3};
 		quickSortDemo.quickSort(nums2, 0, nums2.length - 1);
 		for (int i : nums2) {
 			System.out.print(i + " ");
 		}
 	}
-	
+
 	public void quickSort(int[] nums, int left, int right) {
 		// note: while(left<right)
 		if (left < right) {
@@ -24,19 +24,20 @@ public class QuickSortDemo {
 			quickSort(nums, mid + 1, right);
 		}
 	}
-	
+
 	public int partition(int[] nums, int left, int right) {
 		int x = nums[left];
-		
-		while (left < right) {      // easy error: 不需要等号
+
+		// ER: left == right 会导致死循环，因为会来回赋值
+		while (left < right) {
 			while (left < right && x <= nums[right]) right--;
 			nums[left] = nums[right];
-			
+
 			while (left < right && nums[left] <= x) left++;
 			nums[right] = nums[left];
 		}
 		nums[left] = x;
 		return left;
 	}
-	
+
 }
