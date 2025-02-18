@@ -1,0 +1,22 @@
+{
+    "sourceFile": ".gitignore",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1717666297271,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717666360305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n # !test_grpc/examples/**/Makefile\n #\n \n # tmp file\n+TestJava/GradleLearn/bin/\n *.DS_Store\n *.swp\n-TestJava/GradleLearn/bin/\n\\ No newline at end of file\n-.idea/\n+.idea/\n+*lh\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1717666297271,
+            "name": "Commit-0",
+            "content": "# Windows:\nThumbs.db\nehthumbs.db\nDesktop.ini\n\n# Python:\n*.py[cod]\n*.so\n*.egg\n*.egg-info\ndist\nbuild\n\n# My configurations:\ndb.ini\ndeploy_key_rsa\n\n# ignore elf files, theos file doesn't have suffix name.\n# test_grpc/examples/cpp/*/*\n# !test_grpc/examples/**/*.*\n# !test_grpc/examples/**/BUILD\n# !test_grpc/examples/**/Makefile\n#\n\n# tmp file\n*.DS_Store\n*.swp\nTestJava/GradleLearn/bin/\n.idea/"
+        }
+    ]
+}

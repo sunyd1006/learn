@@ -1,0 +1,18 @@
+{
+    "sourceFile": "test_bazel/cpp-tutorial/stage1/main/hello-world.cc",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1716805340458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1716805340458,
+            "name": "Commit-0",
+            "content": "#include <ctime>\n#include <string>\n#include <iostream>\n\nstd::string get_greet(const std::string& who) {\n  return \"Hello \" + who;\n}\n\nvoid print_localtime() {\n  std::time_t result = std::time(nullptr);\n  std::cout << std::asctime(std::localtime(&result));\n}\n\nint main(int argc, char** argv) {\n  std::string who = \"world\";\n  if (argc > 1) {\n    who = argv[1];\n  }\n  std::cout << get_greet(who) << std::endl;\n  print_localtime();\n  return 0;\n}\n"
+        }
+    ]
+}
