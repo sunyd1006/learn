@@ -2,6 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "logToFile": true,
+            "python": "/Users/sunyindong/opt/anaconda3/bin/python",
+        },
+        {
             "name": "g11_launch_sigle_file",
             "type": "cppdbg",
             "request": "launch",
@@ -18,6 +27,6 @@
             "osx": {
                 "MIMode": "lldb"
             }
-        }
+        },
     ]
 }

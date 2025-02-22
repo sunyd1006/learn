@@ -37,3 +37,10 @@ TestJava/GradleLearn/bin/
 **/code.iml
 tmp/out/**
 **/**.dSYM/Contents
+
+
+### disable google drive file upload.
+.tmp*/
+env/
+
+

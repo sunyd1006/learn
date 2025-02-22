@@ -1,5 +1,7 @@
 {
     "files.associations": {
+        "*.LOG": "log",
+        "*.log": "log",
         "vector": "cpp",
         "atomic": "cpp",
         "__bit_reference": "cpp",
@@ -83,8 +85,13 @@
         "__functional_base": "cpp",
         "algorithm": "cpp",
         "functional": "cpp",
-        "iterator": "cpp",
         "utility": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "cfenv": "cpp",
+        "csetjmp": "cpp",
+        "queue": "cpp",
+        "scoped_allocator": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp"
     }
 }
