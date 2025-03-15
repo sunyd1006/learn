@@ -4,6 +4,7 @@
 function predefine_dir() {
   mkdir -p ${HOME}/sunyindong.syd/codespace
   mkdir -p ${HOME}/sunyindong.syd/codespace/tool
+  ln -s ${HOME}/sunyindong ${HOME}/sunyindong.syd
 }
 predefine_dir
 alias cdsyd="cd ${HOME}/sunyindong.syd/"
@@ -18,9 +19,16 @@ alias vibashrc="vi ${mybashrc}"
 # git config
 alias gst="git status "
 alias ga="git add "
-alias gcm="git commit -m
-alias gcam="git commit --amend"
+alias gcm="git commit -m "
+alias gcam="git commit --amend "
 alias gco="git checkout "
 alias gbr="git branch "
 alias gl="git log "
 alias gr="git restore "
+
+# vim
+alias vi="nvim "
+alias vim="nvim "
+
+
+

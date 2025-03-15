@@ -22,6 +22,7 @@ vim.cmd([[
   augroup end
 ]])
 
+-- s: 新的插件可以配置在这里即可
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'folke/tokyonight.nvim' -- 主题
