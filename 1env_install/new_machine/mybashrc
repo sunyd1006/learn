@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#  shell config
+function predefine_dir() {
+  mkdir -p ${HOME}/sunyindong.syd/codespace
+  mkdir -p ${HOME}/sunyindong.syd/codespace/tool
+}
+predefine_dir
+alias cdsyd="cd ${HOME}/sunyindong.syd/"
+alias cdcode="cd ${HOME}/sunyindong.syd/codespace/"
+alias cdtool="cd ${HOME}/sunyindong.syd/tool/"
+
+export LEARN_PROJECT="${HOME}/sunyindong.syd/codespace/learn"
+mybashrc="${HOME}/sunyindong.syd/codespace/learn/1env_install/new_machine/mybashrc"
+alias mysource="source ${mybashrc}"
+alias vibashrc="vi ${mybashrc}"
+
+# git config
+alias gst="git status "
+alias ga="git add "
+alias gcm="git commit -m
+alias gcam="git commit --amend"
+alias gco="git checkout "
+alias gbr="git branch "
+alias gl="git log "
+alias gr="git restore "
