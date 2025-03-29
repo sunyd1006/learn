@@ -31,6 +31,7 @@ alias gco="git checkout "
 alias gbr="git branch "
 alias gl="git log "
 alias gr="git restore "
+alias gd="git diff "
 
 # vim
 alias vi="nvim "
