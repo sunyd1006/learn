@@ -28,7 +28,7 @@ int	ThreshLo=50, ThreshHi=100;		// "Edge" vs. "No Edge" thresholds
 
 // Where images and temporary results are stored in GPU
 uch		*GPUImg,   *GPUResultImg;
-double  *GPUBWImg, *GPUGaussImg, *GPUGradient, *GPUTheta;	
+double  *GPUBWImg, *GPUGaussImg, *GPUGradient, *GPUTheta;
 
 
 struct ImgProp{
@@ -168,10 +168,10 @@ void SobelKernel2S(double *ImgGrad, double *ImgTheta, double *ImgGauss, ui Hpixe
 		indx=(MYrow-1)*Hpixels + MYcol-1;
 		GX = (-ImgGauss[indx-1]+ImgGauss[indx+1]);
 		GY = (-ImgGauss[indx-1]-2*ImgGauss[indx]-ImgGauss[indx+1]);
-		
+
 		indx+=Hpixels;
 		GX += (-2*ImgGauss[indx-1]+2*ImgGauss[indx+1]);
-		
+
 		indx+=Hpixels;
 		GX += (-ImgGauss[indx-1]+ImgGauss[indx+1]);
 		GY += (ImgGauss[indx-1]+2*ImgGauss[indx]+ImgGauss[indx+1]);
@@ -189,7 +189,7 @@ void ThresholdKernel2S(uch *ImgResult, double *ImgGrad, double *ImgTheta, ui Hpi
 	ui ThrPerBlk = blockDim.x;
 	ui MYbid = blockIdx.x;
 	ui MYtid = threadIdx.x;
-	
+
 	unsigned char PIXVAL;
 	double L, H, G, T;
 
@@ -367,7 +367,7 @@ int main(int argc, char **argv)
 				 printf("\n\n   (Note: 0 means Synchronous (no streaming) ... H=Hor. flip , E=Edge detection\n");
 				 exit(EXIT_FAILURE);
 	}
-	
+
 	// Operation is 'H' for Horizontal flip and 'E' for Edge Detection
 	if ((Operation != 'E') && (Operation != 'H')) {
 		printf("Invalid operation '%c'. Must be 'H', or 'E' ... \n", Operation);
@@ -445,15 +445,15 @@ int main(int argc, char **argv)
 	SMcount       = GPUprop.multiProcessorCount;
 	ConstMem      = (ul) GPUprop.totalConstMem;
 	GlobalMem     = (ul) GPUprop.totalGlobalMem;
-	
+
 
 	// CREATE EVENTS
-	cudaEventCreate(&time1);		
+	cudaEventCreate(&time1);
 	cudaEventCreate(&time2);
 	cudaEventCreate(&time3);
 	cudaEventCreate(&time4);
 
-	// CREATE STREAMS  
+	// CREATE STREAMS
 	if(NumberOfStreams != 0){
 		for (i = 0; i < NumberOfStreams; i++) {
 			chkCUDAErr(cudaStreamCreate(&stream[i]));
@@ -468,7 +468,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "cudaMalloc failed! Can't allocate GPU memory\n");
 		//cudaFreeHost(TheImg);
 		//cudaFreeHost(CopyImg);
-		exit(EXIT_FAILURE);	
+		exit(EXIT_FAILURE);
 	}
 	GPUImg			= (uch *)GPUptr;
 	GPUResultImg	= GPUImg + IMAGESIZE;
@@ -503,7 +503,7 @@ int main(int argc, char **argv)
 				 cudaEventRecord(time2, 0);		// Time stamp at the beginning of kernel execution
 				 switch(Operation){
 					case 'E': BWKernel2S <<< dimGrid2D, ThrPerBlk >>> (GPUBWImg, GPUImg, IPH, IPV, IPHB, 0);
-							  GaussKernel3S <<< dimGrid2D, ThrPerBlk >>> (GPUGaussImg, GPUBWImg, IPH, IPV, 0); 
+							  GaussKernel3S <<< dimGrid2D, ThrPerBlk >>> (GPUGaussImg, GPUBWImg, IPH, IPV, 0);
 							  SobelKernel2S <<< dimGrid2D, ThrPerBlk >>> (GPUGradient, GPUTheta, GPUGaussImg, IPH, IPV, 0);
 							  ThresholdKernel2S <<< dimGrid2D, ThrPerBlk >>> (GPUResultImg, GPUGradient, GPUTheta, IPH, IPV, IPHB, ThreshLo, ThreshHi,0);
 							  break;
@@ -574,7 +574,7 @@ int main(int argc, char **argv)
 				 for (i = 0; i < NumberOfStreams; i++) {
 					 if (i == 0) {
 						 RowsThisStream = RowsPerStream - 5;
-					 }else if (i == (NumberOfStreams - 1)) {	 
+					 }else if (i == (NumberOfStreams - 1)) {
 						 RowsThisStream = IPV - (NumberOfStreams - 1)*RowsPerStream - 5;
 					 }else{
 						 RowsThisStream = RowsPerStream - 10;
@@ -685,7 +685,7 @@ int main(int argc, char **argv)
 			case 'H': printf("CPU--> GPU Transfer                   =%7.2f ms  \n", Time12);
 					  printf("Flip kernel                           =%7.2f ms\n", Time23);
 					  printf("GPU--> CPU Transfer                   =%7.2f ms\n", Time34);
-				
+
 					  break;
 		}
 		PrintSep();
@@ -697,7 +697,7 @@ int main(int argc, char **argv)
 	cudaFree(GPUptr);
 
 	// DESTROY EVENTS
-	cudaEventDestroy(time1);	
+	cudaEventDestroy(time1);
 	cudaEventDestroy(time2);
 	cudaEventDestroy(time3);
 	cudaEventDestroy(time4);
