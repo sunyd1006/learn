@@ -1,0 +1,132 @@
+#!/bin/bash
+
+
+# ============  shell config
+function predefine_dir() {
+  if [[ ${HOME} == "/Users/sunyindong" ]]; then
+    syd_dir="$HOME"  # local m1 mac
+  elif [[ ${HOME} == "/Users/sunyindong.syd" ]]; then
+    syd_dir="$HOME"  # correct mac
+  else
+    syd_dir="${HOME}/sunyindong.syd"
+  fi
+  mkdir -p ${syd_dir}/codespace
+  toolPath=${syd_dir}/tool
+  mkdir -p ${toolPath}
+  export PATH=$PATH:$toolPath
+}
+predefine_dir
+
+export LEARN_PROJECT="${syd_dir}/codespace/learn"
+mybashrc="${syd_dir}/codespace/learn/1env_install/new_machine/mybashrc"
+alias mysource="source ${mybashrc}"
+alias vibashrc="vi ${mybashrc}"
+
+alias cdsyd="cd ${syd_dir}/"
+alias cdcode="cd ${syd_dir}/codespace/"
+alias cdtool="cd ${syd_dir}/tool/"
+alias cdlearn="cd ${LEARN_PROJECT}"
+
+# ======= mychine config
+alias ll="ls -al"                   # yymmddhhmm ：指定年月日时分，如 17022318 表示2017年2月23日18时
+alias myhalt="sudo shutdown -h"            # hh:mm ：今天某时某分
+alias myrestart="sudo shutdown -r"          # +n ：n分钟后
+alias mysleep="sudo shutdown -s"           # now：现在
+alias print="printf '\e[?2004l' "
+
+
+# ========== cd alias
+# alias for dir、quick command、
+alias cddesktop="cd ~/Desktop"
+alias cddown="cd && cd ./Downloads"
+alias cddocu="cd && cd ./Documents"
+alias cdenv="cd && cd ./environment"
+alias cdwork="cd && cd ./workspace"
+alias cdcode="cd && cd ./codespace"
+alias cdjava="cdcode && cd ./TestJava"
+alias cdali="cdcode && cd ./develop_ali"
+alias cdtest="cdcode && cd  ./test"
+
+alias cdlearn="cdcode && cd ./learn"
+alias cdcpp="cdcode && cd ./learn/test_cpp"
+
+
+
+# =========  git config
+alias gst="git status "
+alias ga="git add "
+alias gcm="git commit -m "
+alias gcam="git commit --amend "
+alias gco="git checkout "
+alias gcob="git checkout -b"
+
+alias gcp="git cherry-pick "
+
+alias gbr="git branch "
+alias gl="git log "
+alias glg="git log --graph --decorate --oneline --all"
+
+alias gc="git clean "
+alias gr="git restore "
+
+alias gd="git diff"
+alias gbr="git branch"
+
+alias gge="git grep -e"
+alias ggn="git grep -n"
+
+
+
+# ========== ag grep
+alias ag="ag --group"
+alias agc="ag -C "
+alias ag3="ag -C 3 "
+alias ag4="ag -C 4 "
+alias agn="ag      --nogroup "
+alias agn3="ag -C 3 --nogroup "
+
+# ========== vim
+alias vi="nvim "
+alias vim="nvim "
+
+
+
+# ========== docker config
+# sun add for docker-compose timeout
+export COMPOSE_HTTP_TIMEOUT=900
+export DOCKER_CLIENT_TIMEOUT=900
+
+
+
+# ========= mvn config
+alias mvndown="mvn dependency:resolve -Dclassifier=sources"
+alias mvndes="mvn deploy -DaltDeploymentRepository=snapshots::default::http://mvnrepo.alibaba-inc.com/mvn/snapshots -Dmaven.test.skip=true -Dgpg.skip"
+alias mvnp="mvn clean package"
+alias mvnps="mvn clean package -Dmaven.test.skip"
+alias mvn_update_snap="mvn clean install -U"
+alias mvnrun="mvn spring-boot:run"
+
+function mvndown() {
+    mvn dependency:sources
+    mvn dependency:resolve -Dclassifier=javadoc
+}
+
+
+
+# =========== cpp config
+
+alias g11="g++ -std=c++11 -g -pthread "
+alias g14="g++ -std=c++14 -g -pthread "
+
+alias mm="sh ${dev_tool}/mysync.sh"
+alias mytool="sh ${dev_tool}/mytool.sh"
+
+
+
+# ======== source
+alias mysource="source ${mybashrc} && source ~/.bash_profile && source ~/.bashrc"
+# 需要持久化的保存到 mybashrc 里面
+alias vimy="vi ${mybashrc}"
+alias vicom="vi ~/.bash_profile"
+
+

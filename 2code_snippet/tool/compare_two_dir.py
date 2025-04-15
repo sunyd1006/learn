@@ -54,8 +54,8 @@ def compare_files(file1, file2):
     return get_file_hash(file1) == get_file_hash(file2)
 
 # 示例目录路径
-dir1 = '/Users/sunyindong/codespace/learn'
-dir2 = '/Users/sunyindong/codespace/learnbak'
+dir1 = '/Users/sunyindong.syd/codespace/learn/1env_install/new_mac'
+dir2 = '/Users/sunyindong.syd/codespace/learn/1env_install/new_machine'
 
 def printFunc(list):
     for file in list:
