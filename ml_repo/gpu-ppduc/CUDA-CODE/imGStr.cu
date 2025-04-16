@@ -189,6 +189,10 @@ void ThresholdKernel2S(uch *ImgResult, double *ImgGrad, double *ImgTheta, ui Hpi
 	ui ThrPerBlk = blockDim.x;
 	ui MYbid = blockIdx.x;
 	ui MYtid = threadIdx.x;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 	unsigned char PIXVAL;
 	double L, H, G, T;
 
@@ -366,6 +370,10 @@ int main(int argc, char **argv)
 				 printf("\n\n   (Note: 0 means Synchronous (no streaming) ... H=Hor. flip , E=Edge detection\n");
 				 exit(EXIT_FAILURE);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 	// Operation is 'H' for Horizontal flip and 'E' for Edge Detection
 	if ((Operation != 'E') && (Operation != 'H')) {
 		printf("Invalid operation '%c'. Must be 'H', or 'E' ... \n", Operation);
@@ -683,6 +691,10 @@ int main(int argc, char **argv)
 			case 'H': printf("CPU--> GPU Transfer                   =%7.2f ms  \n", Time12);
 					  printf("Flip kernel                           =%7.2f ms\n", Time23);
 					  printf("GPU--> CPU Transfer                   =%7.2f ms\n", Time34);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 					  break;
 		}
 		PrintSep();
