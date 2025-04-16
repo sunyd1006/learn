@@ -24,6 +24,7 @@ vim.cmd([[
 
 -- s: 新的插件可以配置在这里即可
 return require('packer').startup(function(use)
+  -- packer 能够管理他自己
   use 'wbthomason/packer.nvim'
   use 'folke/tokyonight.nvim' -- 主题
   use {
@@ -39,6 +40,8 @@ return require('packer').startup(function(use)
   use "christoomey/vim-tmux-navigator" -- 用ctl-hjkl来定位窗口
   use "nvim-treesitter/nvim-treesitter" -- 语法高亮
   use "p00f/nvim-ts-rainbow" -- 配合treesitter，不同括号颜色区分
+
+  -- 配置lsp相关的插件
   use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",  -- 这个相当于mason.nvim和lspconfig的桥梁
@@ -59,7 +62,7 @@ return require('packer').startup(function(use)
   use "lewis6991/gitsigns.nvim" -- 左则git提示
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.1',  -- 文件检索
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',  -- 文件检索
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 

@@ -41,8 +41,19 @@ function gen_conda_url() {
 }
 gen_conda_url
 
-
+# https://blog.csdn.net/NBDwo/article/details/136272442
+# https://github.com/pytorch/pytorch/blob/main/RELEASE.md
+# 1. nivida-smi 显示的cuda是硬件最高支持的版本
+# 2. nvcc -V 显示的当前cuda编译器的版本，一般<= nvida-smi显示的cuda版本
+# 3. torch必须适配cuda版本
 function install_torch_and_d2l() {
+    pip install torch==1.12.0            # cpu版本
+    pip install torchvision==0.13.0      # gpu 版本
+    pip install d2l==0.17.6              # d2l包
+    [ $? -ne 0 ] && log_error "install d2l pythonlib failed" && exit 1
+}
+
+function install_d2l_and_cu115() {
     pip install torch==1.12.0            # cpu版本
     pip install torchvision==0.13.0      # gpu 版本
     pip install d2l==0.17.6              # d2l包
