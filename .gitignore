@@ -29,18 +29,20 @@ TestJava/GradleLearn/bin/
 .idea/
 *lh
 
+
 # tmp file content
 *.out
+**/packer_compiled.lua
 
 ### tmp java project file
 **/.idea/**
 **/code.iml
 tmp/out/**
 **/**.dSYM/Contents
+TestJava/GradleLearn/.gradle/**
+TestJava/GradleLearn/build/**
 
 
 ### disable google drive file upload.
 .tmp*/
 env/
-
-
