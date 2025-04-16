@@ -2,7 +2,7 @@
 
 
 # ============  shell config
-function predefine_dir() {
+function load_config_from_learn() {
   if [[ ${HOME} == "/Users/sunyindong" ]]; then
     syd_dir="$HOME"  # local m1 mac
   elif [[ ${HOME} == "/Users/sunyindong.syd" ]]; then
@@ -14,13 +14,16 @@ function predefine_dir() {
   toolPath=${syd_dir}/tool
   mkdir -p ${toolPath}
   export PATH=$PATH:$toolPath
-}
-predefine_dir
 
-export LEARN_PROJECT="${syd_dir}/codespace/learn"
-mybashrc="${syd_dir}/codespace/learn/1env_install/new_machine/mybashrc"
-alias mysource="source ${mybashrc}"
-alias vibashrc="vi ${mybashrc}"
+  export LEARN_PROJECT="${syd_dir}/codespace/learn"
+  mybashrc="${LEARN_PROJECT}/1env_install/new_mac/mybashrc"
+
+  export CPATH=${LEARN_PROJECT}/0lib/cpp/include/:$CPATH
+
+  unlink ~/.vimrc
+  ln -s ${syd_dir}/1env_install/new_mac/ide_config/.vimrc_syd ~/.vimrc
+}
+load_config_from_learn
 
 alias cdsyd="cd ${syd_dir}/"
 alias cdcode="cd ${syd_dir}/codespace/"
@@ -122,11 +125,10 @@ alias mm="sh ${dev_tool}/mysync.sh"
 alias mytool="sh ${dev_tool}/mytool.sh"
 
 
-
 # ======== source
 alias mysource="source ${mybashrc} && source ~/.bash_profile && source ~/.bashrc"
-# 需要持久化的保存到 mybashrc 里面
-alias vimy="vi ${mybashrc}"
-alias vicom="vi ~/.bash_profile"
 
+# 需要持久化的保存到 mybashrc 里面
+alias vibashrc="vi ${mybashrc}"
+alias vicom="vi ~/.bash_profile"
 

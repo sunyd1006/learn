@@ -38,7 +38,7 @@ TestJava/GradleLearn/bin/
 **/.idea/**
 **/code.iml
 tmp/out/**
-**/**.dSYM/Contents
+**/*.dSYM/**
 TestJava/GradleLearn/.gradle/**
 TestJava/GradleLearn/build/**
 

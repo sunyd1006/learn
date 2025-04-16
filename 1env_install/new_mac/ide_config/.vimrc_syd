@@ -1,0 +1,55 @@
+" ==== the config of your vim
+set number          " vim左侧显示number
+set mouse=v         " vim里允许用鼠标来滚动, i表示在插入默认下允许滚动, a表示在所有模式下允许滚动，但允许滚动会不让复制，所以给关闭了。
+
+" 临时方案 输入 /search\c 并按回车以搜索 "search"，不区分大小写。 输入 /SEARCH\C 并按回车以搜索 "SEARCH"，区分大小写。
+set ignorecase      " 在搜索时忽略字母大小写
+set smartcase       " 如果搜索模式中包含大写字母，则区分大小写
+set tabstop=4       " 设置制表符宽度为4个空格
+set softtabstop=4   " 在插入模式下，按下 Tab 键时插入4个空格
+set shiftwidth=4    " 每次缩进的宽度为4个空格
+set expandtab       " 将制表符转换为空格，方便团队协作和代码格式统一
+set autoindent      " 启用自动缩进，符合上一行的缩进
+set smartindent     " 启用智能缩进，自动为新的代码块（如函数或控制结构）调整缩进
+
+
+" ==== bind jk to esc for backing normal mode quickly, and bind , to leader
+" install Plug 'nathanalderson/vim-mac-command-key' you can use command as leader
+" let g:vim_mac_command_key_leader = 1
+" inoremap 使得vim在插入模式下生效
+" nnoremap 使得viz在normal模式下生效
+" map会递归的使用映射，而nnoremap不会递归的使用映射。
+let mapleader = ","
+inoremap jk      <Esc><cr>
+nnoremap <C-s> :w<cr>
+
+" ==== 为vimgrep配置快捷键
+nnoremap co :copen<cr>
+nnoremap cc :cclose<cr>
+nnoremap cn :cnext
+nnoremap cp :cprev
+
+" ==== 清空quicklist
+nnoremap cql :call setqflist([])<cr>
+nnoremap cll :call setloclist(0, [])<CR>
+
+
+" ===== vim自带的快捷键
+" 在vim分屏中来回切换 <C-W>c close分屏 <C-w>p/<C-w>w左右跳动 <C-w>h光标focus左侧树形目录, <C-w>l 右侧目录, <C-w>j 移动到下面, <C-w>k 上面
+nnoremap <C-c> <C-w>c
+nnoremap <C-p> <C-w>p
+nnoremap <C-g> <C-w>w
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+" ==== the shortcut of 'tabn'
+nnoremap <C-w> :tabclose<CR>
+nnoremap <C-j-j> :tabn<CR>
+nnoremap <C-k-k> :tabn<CR>
+
+
+" to edit and reload .vimrc quickly
+map <leader>ee :e ~/.vimrc<cr>
+map <leader>ss :source ~/.vimrc<cr>

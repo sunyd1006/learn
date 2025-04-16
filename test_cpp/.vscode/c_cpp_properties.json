@@ -39,6 +39,21 @@
             // Linux: gcc-x64; macOs: clang-x64
             "intelliSenseMode": "gcc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
+        },
+        {
+            "name": "Bazel",
+            "includePath": [
+                // https://bazel.build/remote/output-directories
+                // ebf8c4496cb33cf87f53027b1cdfcb11 是 /apsara/sunyindong.syd/codespace/odps_src 的 md5 hash
+                "/apsara/bazel_cache/_bazel_admin/ebf8c4496cb33cf87f53027b1cdfcb11/execroot/_main/bazel-out/k8-fastbuild/**",
+                "/apsara/bazel_cache/_bazel_admin/ebf8c4496cb33cf87f53027b1cdfcb11/external/**",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/apsara/alicpp/built/gcc-9.2.1-cxx98abi/gcc-9.2.1/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

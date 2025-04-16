@@ -20,6 +20,10 @@ void vector_demo() {
     });
     println( vec, "降序排列: ");
 
+    // resize() 会改变size，相当于含参数n的构造函数；
+    // 但是reserve() 不会改变size, 它只改变了capacity()
+    //   1. vector<vector<int>> sortedInput(maxIdx + 1);
+    //   2. vector<vector<int>> sortedInput;  sortedInput.resize(maxIdx+1);
 }
 
 void string_demo() {
