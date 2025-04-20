@@ -6,7 +6,7 @@ import com.datastruct.leetcode.TreeNode;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Util {
+public class LeUtil {
     // 构建一个链表
     public static ListNode buildListNode(int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -33,7 +33,7 @@ public class Util {
 
     /**
      * 按照左右子树的数组来构建
-     *   TreeNode root = Util.buildTree(new Integer[]{1, 2, 3, null, 5, 6, 7});
+     *   TreeNode root = LeUtil.buildTree(new Integer[]{1, 2, 3, null, 5, 6, 7});
      *   Assert.assertTrue(TreeNode.inorder(root).contains("2 5 1 6 3 7"));
      *
      * @param nums

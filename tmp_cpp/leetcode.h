@@ -5,7 +5,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-
 // Definition for singly-linked list.
 struct ListNode
 {
@@ -14,7 +13,15 @@ struct ListNode
 	ListNode() : val(0), next(nullptr) {}
 	ListNode(int x) : val(x), next(nullptr) {}
 	ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+};
+
+struct LeUtil {
     static ListNode* buildListNode(vector<int>& nums) {
         ListNode* dummy = new ListNode(0, nullptr), *p = dummy;
         for(auto num : nums) {
@@ -31,12 +38,6 @@ struct ListNode
         }
         cout << endl;
     }
-};
-
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
 };
 
 

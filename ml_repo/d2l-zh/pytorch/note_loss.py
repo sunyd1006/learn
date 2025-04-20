@@ -20,7 +20,7 @@ class HuberLoss(nn.Module):
         self.sigma = sigma
     def forward(self, y, y_hat):
         if F.l1_loss(y, y_hat) > self.sigma:
-            loss = F.l1_loss(y, y_hat) - self.sigm a /2
+            loss = F.l1_loss(y, y_hat) - self.sigma /2
         else:
             loss = ( 1 /( 2 *self.sigma) ) *F.mse_loss(y, y_hat)
         return loss

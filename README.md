@@ -13,12 +13,16 @@ git branch -M main
 git push -u origin main
 ```
 
+
+
 # second usage
 
 ```
 git config user.email "1404131532@qq.com"
 git config user.name "sunyd1006"
 ```
+
+
 
 # 当前仓库完全合并引用的开源仓库的提交历史
 
@@ -47,5 +51,7 @@ git commit -m "Merged nested repository history into parent repository"
 
 
 ```
+
+
 
 # Tool

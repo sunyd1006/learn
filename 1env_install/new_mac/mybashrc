@@ -14,15 +14,16 @@ function load_config_from_learn() {
   mkdir -p ${toolPath}
   export PATH=$PATH:$toolPath
 
-  export LEARN_PROJECT="${syd_dir}/codespace/learn"
-  mybashrc="${LEARN_PROJECT}/1env_install/new_mac/mybashrc"
+export LEARN_PROJECT="${syd_dir}/codespace/learn"
+bash_dir="${LEARN_PROJECT}/1env_install/new_mac/"
+mybashrc="${bash_dir}/mybashrc"
+mybashrc_tmp="${bash_dir}/mybashrc.tmp"
 
-  export CPATH=${LEARN_PROJECT}/0lib/cpp/include/:$CPATH
-
-  unlink ~/.vimrc
-  ln -s ${syd_dir}/1env_install/new_mac/ide_config/.vimrc_syd ~/.vimrc
-}
-load_config_from_learn
+alias mysource="source ${mybashrc} ; source ${mybashrc_tmp} ; source ~/.bash_profile ; source ~/.bashrc"
+# 需要持久化的保存到 mybashrc 里面
+alias vimy="vi ${mybashrc}"
+alias vicom="vi ~/.bash_profile"
+alias vitmp="vi ${mybashrc_tmp}"
 
 alias cdsyd="cd ${syd_dir}/"
 alias cdcode="cd ${syd_dir}/codespace/"
@@ -131,9 +132,4 @@ function ms {
 
 
 # ======== source
-alias mysource="source ${mybashrc} && source ~/.bash_profile && source ~/.bashrc"
-
-# 需要持久化的保存到 mybashrc 里面
-alias vibashrc="vi ${mybashrc}"
-alias vicom="vi ~/.bash_profile"
 

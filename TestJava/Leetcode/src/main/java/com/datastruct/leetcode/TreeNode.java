@@ -1,10 +1,8 @@
 package com.datastruct.leetcode;
 
 
-import com.datastruct.Util;
-import org.junit.Assert;
+import com.datastruct.LeUtil;
 
-import javax.sound.midi.Soundbank;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -92,7 +90,7 @@ public class TreeNode {
 
 
   public static void main(String[] args) {
-    TreeNode root = Util.buildBinaryTree(new Integer[]{1, 2, 3, null, 5, 6, 7});
+    TreeNode root = LeUtil.buildBinaryTree(new Integer[]{1, 2, 3, null, 5, 6, 7});
     // Assert.assertTrue(TreeNode.inorder(root).contains("2 5 1 6 3 7"));
 		//
     // TreeNode.printPreOrder(root);

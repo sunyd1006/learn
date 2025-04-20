@@ -60,6 +60,13 @@ function install_d2l_and_cu115() {
     [ $? -ne 0 ] && log_error "install d2l pythonlib failed" && exit 1
 }
 
+function install_d2l_on_cu121() {
+    # https://pytorch.org/get-started/previous-versions/?utm_source=chatgpt.com
+    # pytorch v2.2.2
+    conda install pytorch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 pytorch-cuda=12.1 -c pytorch -c nvidia
+    [ $? -ne 0 ] && log_error "install d2l pythonlib failed" && exit 1
+}
+
 function is_file_exists() {
     if [[ -f $1 ]]; then
         echo 0

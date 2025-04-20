@@ -101,8 +101,17 @@
         "print": "cpp",
         "shared_mutex": "cpp",
         "source_location": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "filesystem": "cpp",
+        "memory_resource": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++",
-    "cmake.sourceDirectory": "/Users/sunyindong.syd/codespace/learn/test_grpc/examples/cpp/helloworld"
+    "cmake.sourceDirectory": "/Users/sunyindong.syd/codespace/learn/test_grpc/examples/cpp/helloworld",
+
+
+    // 工作区级别的配置:
+    "jupyter.debugJustMyCode": false,
+    "debugpy.debugJustMyCode": false,
+    // 请配置正确的python解释器路径，否则会在import torch等明明能够找到的库位置报错
+    "python.analysis.extraPaths": ["/Users/sunyindong/opt/anaconda3/envs/d2l/bin/python"]
 }

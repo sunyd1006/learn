@@ -10,6 +10,7 @@ bilibili 李沐在线课程：https://www.bilibili.com/video/BV1kq4y1H7sw
 
 # 自定义文件
 
-* readme.pynb：是对主要文件的个人总结
-* readme_test.ipynb：是对 pytorch 主要内容的输出
+* note.ipynb：是对python, pytorch的主要总结，默认笔记位置。
+* node_model.pynb：是对模型的主要总结
 * /Users/sunyindong/opt/anaconda3/envs/d2l/lib/python3.9/site-packages/d2l/torch.py  概念了try_gpu让其能跑在mac的环境上
+  * 但是实验证明，在rnn_scratch, rnn_consice 里面如果有mps 会抛出异常，即抛出print(**"inputs max:"**, inputs.max()) > vocabSize的情况，

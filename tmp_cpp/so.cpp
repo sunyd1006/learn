@@ -91,44 +91,8 @@ using namespace std;
 
 
 int main() {
-    // vector  10yi，long
-    // 1. 内存大小, 1b * 4Bytes =40 0000 0000 = 4GB
-    // int num = 10 * 10000 * 10000;
-    // vector<int> nums(num, 0);
-
-    // 2. 4GB  can be in stack
-
-    // 3. 4GB/4k = 1024M 能运行吗
-
-    // 32 bit CPU 能 4GB 存吗 => false
-    // 2^32 = 4294967296
-
-    // 1. nums.reserve()
-    // 2. 压缩：10@100,
 
 
-    // float ieee754
-
-    // 0.xxx, 0.yyy    =>     c.zzz
-    // 1. bigFloat     =>  bigFloat
-
-
-    // std::string s = "123.456";
-    // auto it = s.find('.');
-    // if (it != std::string::npos) {
-    //     auto idx = it - s.begin();
-    // }
-    // std::cout << s.find('.') << std::endl;
-
-
-    std::string str = "hello....world";
-    std::string str2 = "hello....world";
-    char ch = '.';
-    std::remove(str2.begin(), str2.end(), ch);
-    assert(str2 == "helloworldorld");
-
-    str.erase(std::remove(str.begin(), str.end(), ch), str.end());
-    assert(str == "helloworld");
 
     return 0;
 }

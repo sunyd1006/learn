@@ -26,7 +26,7 @@ void print_element(const std::pair<K, V>& elem) {
 // 打印容器中的所有元素
 template <typename Sequence>
 inline std::ostream& println(Sequence const& seq, const std::string& dis) {
-    std::cout << dis;
+    std::cout << dis << ": ";
     for (auto const& elem : seq) {
         print_element(elem);
     }

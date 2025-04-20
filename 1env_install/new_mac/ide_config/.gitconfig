@@ -1,0 +1,70 @@
+# .gitconfig
+# This is Git's per-user configuration file.
+[merge]
+    summary = true
+    tool = vimdiff
+[diff]
+    renames = copy
+[color]
+    diff = auto
+    status = true
+    branch = auto
+    interactive = auto
+    ui = auto
+    log = true
+[status]
+    submodulesummary = -1
+[mergetool "vimdiff"]
+    cmd = "vim --noplugin \"$PWD/$MERGED\" \
+          +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
+          +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
+          +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
+          +\":wincmd l\""
+[format]
+    numbered = auto
+[alias]
+    c= commit
+    ca = commit -a
+    cm = commit -m
+	df = diff
+    st = status
+    pl = pull
+    ps = push
+    dt = difftool
+    l = log --stat
+    cp = cherry-pick
+    co = checkout
+    b = branch
+    pso = push origin
+    plo = pull origin
+    ga = git add
+    gcm = git commit -m
+    gca = git commit -a
+    gcam = git commit -a -m
+    gb = git branch
+    gba = git branch -a
+    gbd = git branch -d
+    gcob = git checkout -b
+    gco = git checkout
+    gdf = git diff
+    ggpush = git push origin $(git_current_branch)
+    ggsup = git branch --set-upstream-to = origin/$(git_current_branch)
+    gm = git merge
+    gfo = git fetch origin
+    gcp = git cherry-pick
+    glgp = git log --stat -p
+    gst = git status
+    gsta = git stash save
+    gstp = git stash pop
+    glog = git log --oneline --decorate --graph
+[user]
+    name = sunyd
+    email = 1404131532@qq.com
+[core]
+    excludesfile = /Users/sunyindong/.gitignore_global
+[difftool "sourcetree"]
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path =
+[mergetool "sourcetree"]
+    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+    trustExitCode = true

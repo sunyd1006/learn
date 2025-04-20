@@ -15,6 +15,7 @@
             "type": "cppdbg",
             "request": "launch",
             "preLaunchTask": "g11_compile_sigle_file",
+            "targetArchitecture": "arm64",
             "program": "${fileDirname}/${fileBasenameNoExtension}.out",
             "args": [],
             "environment": [],

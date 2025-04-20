@@ -41,8 +41,10 @@ tmp/out/**
 **/*.dSYM/**
 TestJava/GradleLearn/.gradle/**
 TestJava/GradleLearn/build/**
+*.tmp
 
 
 ### disable google drive file upload.
 .tmp*/
 env/
+tmp_note.md

@@ -1,0 +1,59 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Long Polling Chat</title>
+</head>
+<body>
+  <h1>📨 Long Polling Example</h1>
+  <div id="messages">
+        <!-- 结果消息会写在这里 -->
+  </div>
+
+  <input id="msgInput" type="text" placeholder="Type a message">
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    // 🔁 启动 long polling 逻辑
+    function longPoll() {
+      fetch('/poll') // 发起 GET 请求到 /poll
+        .then(response => response.json()) // 将返回结果转成 JSON 格式
+        .then(data => {
+          if (data.message) { // 如果服务器有新消息
+            showMessage("收到：" + data.message);
+          }
+          longPoll(); // 继续下一次轮询（关键！）
+        })
+        .catch(err => {
+          console.error("请求失败：", err);
+          showMessage("timeout message from client ");
+          setTimeout(longPoll, 3000); // 失败后等待 3 秒再试
+        });
+    }
+
+    // 📤 发送消息给服务器
+    function sendMessage() {
+      const msg = document.getElementById("msgInput").value;
+      fetch('/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: msg }) // 发送 JSON 数据
+      });
+      document.getElementById("msgInput").value = ""; // 清空输入框
+    }
+
+    // 🖥️ 显示消息在页面上
+    function showMessage(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      document.getElementById("messages").appendChild(div);
+    }
+
+    // 🚀 页面加载后，自动启动轮询
+    longPoll();
+  </script>
+</body>
+</html>
