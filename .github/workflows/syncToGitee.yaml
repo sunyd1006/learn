@@ -1,0 +1,22 @@
+# https://github.com/mqyqingfeng/Blog/issues/236
+name: syncToGitee
+on:
+  push:
+    branches:
+      - main
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/Yikun/hub-mirror-action
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: 'github/sunyd1006'
+          dst: 'gitee/sunyd1006'
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token:  ${{ secrets.GITEE_TOKEN }}
+          static_list: "learn"
+          timeout: '1h'
+          force_update: true
+          debug: true

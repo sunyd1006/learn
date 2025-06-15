@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo "mysync params: $@"
-set -x
+verbose=false
+echo -e "mysync params: $@ \n"
+# set -x
 scriptdir=$(cd -P -- $(dirname -- ${BASH_SOURCE:-$0}) && pwd)
 cpplintdir=/Users/sunyindong.syd/codespace/develop_ali/odps_src/bin
 
@@ -50,20 +51,26 @@ if [[ "$CMD" == "" ]]; then
     exit 1
 fi
 
+verbose_echo() {
+  if [[ verbose == "true" ]]; then
+    echo -e "$1"
+  fi
+}
+
 get_paths()
 {
-  echo "get_paths relative_path: $relative_path"
+  verbose_echo "get_paths relative_path: $relative_path"
 
   # get full relative path related to LOCAL_BASE_DIR
   [ -d $relative_path ] && relative_path=`cd $relative_path && pwd -P`
-  RDIR=$(cd -P -- $(dirname -- $relative_path) && pwd)
-  relative_path=$RDIR/$(basename $relative_path)
+  relative_path_dir=$(cd -P -- $(dirname -- $relative_path) && pwd)
+  # relative_path is going to be changed to full path
+  relative_path=$relative_path_dir/$(basename $relative_path)
 
   # 移除 LOCAL_BASE_DIR 目录, 得到repo/file_path
   repo_relative_path=${relative_path##${LOCAL_BASE_DIR}/}
-  echo "LOCAL_BASE_DIR: $LOCAL_BASE_DIR"
-  echo "relative_path: $relative_path"
-  echo "file_path: $repo_relative_path"
+  # echo "LOCAL_BASE_DIR: $LOCAL_BASE_DIR"
+  # echo "relative_path: $relative_path"
 
   if [[ "$repo_relative_path" == "$relative_path" ]]; then
     echo "can not find file or directory $relative_path in ${LOCAL_BASE_DIR}"
@@ -72,7 +79,9 @@ get_paths()
 
   # repo_relative_dirname: repo_name/path/to/dirname
   repo_relative_dirname=$(dirname $repo_relative_path)
-#   echo "relative_path: $relative_path, repo_relative_path: $repo_relative_path, repo_relative_dirname: $repo_relative_dirname"
+  verbose_echo "relative_path: $relative_path"
+  verbose_echo "repo_relative_path: $repo_relative_path"
+  verbose_echo "repo_relative_dirname: $repo_relative_dirname"
 }
 
 put()
@@ -91,6 +100,14 @@ remote_run()
   ssh ${REMOTE_USER}@${REMOTE_IP} "cd ${REMOTE_BASE_DIR}/${repo_relative_dirname}/; $1; cd -"
 }
 
+exit_if_relative_path_not_found()
+{
+  if [[ ! -e "$relative_path" ]]; then
+    echo "can not find file or directory $relative_path in $(dirname $relative_path)"
+    exit 1
+  fi
+}
+
 case $CMD in
 
 "get")
@@ -102,10 +119,7 @@ case $CMD in
 "put")
   relative_path=$2
   get_paths
-  if [[ ! -e "$relative_path" ]]; then
-    echo "can not find file or directory $relative_path in $(dirname $relative_path)"
-    exit 1
-  fi
+  exit_if_relative_path_not_found
   put
 ;;
 
@@ -124,10 +138,7 @@ case $CMD in
   for i in $GITDIFFLIST; do
     relative_path=$i
     get_paths
-    if [[ ! -e "$relative_path" ]]; then
-      echo "can not find file or directory $relative_path in $(dirname $relative_path)"
-      exit 1
-    fi
+    exit_if_relative_path_not_found
     if [[ $t_count -eq 5 ]]; then
         t_count=0
         wait
