@@ -1,30 +1,38 @@
 #!/bin/bash
 
+echo "mysync params: $@"
+set -x
 scriptdir=$(cd -P -- $(dirname -- ${BASH_SOURCE:-$0}) && pwd)
 cpplintdir=/Users/sunyindong.syd/codespace/develop_ali/odps_src/bin
 
 usage() {
-  echo "\nmysync (get|put <path>) | putdf | aligngit | putgitpatch [-1|-2|<commit_id>] | abortgitpatch | listgit | cpplint [--verbose|<file_name>]"
+  echo "\nmysync (get|put <path>) | putdf | aligngit | putgitpatch|pp [-1|-2|<commit_id>] | abortgitpatch | listgit | cpplint [--verbose|<file_name>]"
 }
 
 ######## config ########
-# REMOTE_HOSTNAME=AT-40N
-# REMOTE_IP=11.158.199.145
-# REMOTE_USER=admin
-# REMOTE_BASE_DIR=/apsarapangu/disk11/sunyindong.syd
-# LOCAL_BASE_DIR=/Users/sunyindong.syd/codespace/develop_ali
 
- REMOTE_HOSTNAME=AT-ODPS-DEV
- REMOTE_IP=11.158.199.43
- REMOTE_USER=admin
- REMOTE_BASE_DIR=/apsara/sunyindong.syd/codespace/
- LOCAL_BASE_DIR=/Users/sunyindong.syd/codespace/develop_ali
+lower_target=$(echo "$TARGET" | tr '[:upper:]' '[:lower:]')
+case "$lower_target" in
+    "at-40n"|"40n"|"at40n")
+        REMOTE_HOSTNAME="AT-40N"
+        REMOTE_IP="11.158.199.145"
+        REMOTE_USER="admin"
+        REMOTE_BASE_DIR="/apsarapangu/disk11/sunyindong.syd"
+        LOCAL_BASE_DIR="/Users/sunyindong.syd/codespace/develop_ali"
+        ;;
+    "at-odps-dev"|"")
+        REMOTE_HOSTNAME="AT-ODPS-DEV"
+        REMOTE_IP="11.158.199.43"
+        REMOTE_USER="admin"
+        REMOTE_BASE_DIR="/apsara/sunyindong.syd/codespace/"
+        LOCAL_BASE_DIR="/Users/sunyindong.syd/codespace/develop_ali"
+        ;;
+    *)
+        echo "Unknown TARGET: $TARGET"
+        exit 1
+        ;;
+esac
 
-# REMOTE_HOSTNAME=AT-40N
-# REMOTE_IP=11.158.199.145
-# REMOTE_USER=admin
-# REMOTE_BASE_DIR=/apsarapangu/disk11/sunyindong.syd
-# LOCAL_BASE_DIR=/Users/sunyindong.syd/codespace/develop_ali
 ########################
 
 set -e
@@ -44,16 +52,18 @@ fi
 
 get_paths()
 {
+  echo "get_paths relative_path: $relative_path"
+
   # get full relative path related to LOCAL_BASE_DIR
   [ -d $relative_path ] && relative_path=`cd $relative_path && pwd -P`
   RDIR=$(cd -P -- $(dirname -- $relative_path) && pwd)
   relative_path=$RDIR/$(basename $relative_path)
 
-  # 移除local_base_dir目录, 得到repo/file_path
+  # 移除 LOCAL_BASE_DIR 目录, 得到repo/file_path
   repo_relative_path=${relative_path##${LOCAL_BASE_DIR}/}
-#   echo "LOCAL_BASE_DIR: $LOCAL_BASE_DIR"
-#   echo "rpath: $relative_path"
-#   echo "file_path: $repo_relative_path"
+  echo "LOCAL_BASE_DIR: $LOCAL_BASE_DIR"
+  echo "relative_path: $relative_path"
+  echo "file_path: $repo_relative_path"
 
   if [[ "$repo_relative_path" == "$relative_path" ]]; then
     echo "can not find file or directory $relative_path in ${LOCAL_BASE_DIR}"
@@ -129,7 +139,7 @@ case $CMD in
 ;;
 
 # 主要目的是将当前工作目录下的Git补丁打包，并发送到远程服务器上进行应用。
-"putgitpatch")
+"putgitpatch" | "pp" )
   PARAM=-1
   if [[ "$2" != "" ]]; then
     PARAM="$2"

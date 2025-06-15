@@ -1,45 +1,29 @@
 #!/bin/bash/python3
+import signal
 import os
 import subprocess
 import json
+import datetime
 
 # 执行 shell 命令
 class Util:
-    @staticmethod
-    def run_shell_command(command, print_result=False):
+    @classmethod
+    def runcmd(cls, cmd, print_err=True, tips=''):
         try:
-            print("willrun: " , command)
-            # 调用 shell 命令
-            result = subprocess.check_output(command, cwd= shell_working_dir, shell=True, universal_newlines=True, stderr=subprocess.STDOUT)
-            if print_result:
-                print(result.strip())
-            return result.strip()  # .strip() 用于去掉输出末尾的换行符
-        except subprocess.CalledProcessError as e:
-            # 处理错误
-            print("Command failed with return code:", e.returncode)
-            print("Command output:", e.output.strip())  # 输出错误信息
-            return None
-
-    @staticmethod
-    def runcmd(cls, cmd):
-        print("runcmd %s ..." % cmd)
-        process = subprocess.Popen(cmd, stdout = subprocess.PIPE, shell = True, stderr = subprocess.PIPE)
-        while True:
-            output = process.stdout.readline()
-            if output == '' and process.poll() is not None:
-                break
-            if output:
-                print(output.strip())
-        (_, error) = process.communicate()
-        if process.returncode != 0:
-            print("runcmd %s failed, %d, %s" % (cmd, process.returncode, error))
-        return process.returncode, error
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, stderr=subprocess.PIPE)
+            (output, err) = process.communicate()
+            if process.returncode != 0 and print_err:
+                print(tips, output.decode('utf-8'))
+            return process.returncode, output, err
+        except KeyboardInterrupt:
+            os.kill(process.pid, signal.SIGINT)
 
     @classmethod
-    def runcmd_success(cls, cmd):
-        (code, error) = cls.runcmd(cmd)
+    def runcmd_success(cls, cmd, print_out=True):
+        (code, stdout, stderr) = cls.runcmd(cmd)
         if code != 0:
-            raise Exception("execute %s failed, %s" % (cmd, error))
+            raise Exception("execute %s failed, stdout: %s, stderr: %s" % (cmd, stdout, stderr))
+        return stdout.decode('utf-8')
 
 class FileUtil:
     @classmethod
@@ -85,3 +69,17 @@ class FileUtil:
         except Exception as e:
             print(f"An error occurred: {e}")
 
+    @classmethod
+    def backup_path(cls, path):
+        if os.path.exists(path):
+            filename = "{}_{}".format(path, TimeUtil.get_timestr())
+            os.rename(path, filename)
+
+
+class TimeUtil:
+
+    # return 202505241333
+    # py2, py3
+    @classmethod
+    def get_timestr(cls):
+        return datetime.datetime.now().strftime('%Y%m%d%H%M')

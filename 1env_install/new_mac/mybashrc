@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # ============  shell config
 function load_config_from_learn() {
   if [[ ${HOME} == "/Users/sunyindong" ]]; then
@@ -123,6 +122,12 @@ alias g14="g++ -std=c++14 -g -pthread "
 
 alias mm="sh ${dev_tool}/mysync.sh"
 alias mytool="sh ${dev_tool}/mytool.sh"
+
+
+# ======= dev_tool
+function ms {
+    ${LEARN_PROJECT}/1env_install/new_mac/dev_tool/syd_dev_tool/mysync.sh $@
+}
 
 
 # ======== source
