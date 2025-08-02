@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"testing"
 	"time"
 )
 
@@ -85,7 +86,7 @@ func test56_showMaxProcs() {
 	fmt.Println(runtime.GOMAXPROCS(-1)) // Go 1.9.2 // 300
 }
 
-func main() {
+func TestBasicGrammer(t *testing.T) {
 
 	test54_nil_interface()
 	test56_showMaxProcs()

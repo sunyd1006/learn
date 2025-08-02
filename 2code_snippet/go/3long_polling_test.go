@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+	"testing"
 	"time"
 )
 
@@ -27,13 +28,12 @@ func pollHandler(w http.ResponseWriter, r *http.Request) {
 	waiters = append(waiters, ch)
 	mu.Unlock()
 
-
 	timeout := time.Duration(5) * time.Second
 	select {
 	case msg := <-ch:
 		json.NewEncoder(w).Encode(map[string]string{"message": msg})
 	case <-time.After(5 * time.Second):
-		json.NewEncoder(w).Encode(map[string]string{"message": "timeout message from server after " + timeout.String() })
+		json.NewEncoder(w).Encode(map[string]string{"message": "timeout message from server after " + timeout.String()})
 	}
 }
 
@@ -54,7 +54,7 @@ func sendHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "ok")
 }
 
-func main() {
+func TestLongPolling(t *testing.T) {
 	http.Handle("/", http.FileServer(http.Dir(".")))
 	http.HandleFunc("/poll", pollHandler)
 	http.HandleFunc("/send", sendHandler)

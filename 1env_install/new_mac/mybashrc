@@ -118,8 +118,9 @@ function mvndown() {
 
 # =========== cpp config
 
-alias g11="g++ -std=c++11 -g -pthread "
+alias cc="g++ -std=c++17 -g -pthread "
 alias g14="g++ -std=c++14 -g -pthread "
+alias g17="g++ -std=c++17 -g -pthread "
 
 alias mm="sh ${dev_tool}/mysync.sh"
 alias mytool="sh ${dev_tool}/mytool.sh"
@@ -130,6 +131,8 @@ function ms {
     ${LEARN_PROJECT}/1env_install/new_mac/dev_tool/syd_dev_tool/mysync.sh $@
 }
 
+# ==== load customed path
+export PATH="~/.local/bin:Users/sunyindong.syd/.nvm/versions/node/v22.18.0/bin/:$PATH"
 
 # ======== source
 

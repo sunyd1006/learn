@@ -12,7 +12,7 @@ bool data_ready = false;
 
 void worker_thread() {
     std::unique_lock<std::mutex> lock(mtx); // 使用unique_lock管理互斥量的锁
-    cv.wait(lock, []{ return data_ready; }); // 等待条件变量，同时释放锁
+    cv.wait(lock, []{ return data_ready; }); // 等待时自动解锁，被唤醒后自动加锁
     // 条件满足，继续执行
     std::cout << "Worker thread: Data is ready!" << std::endl;
 }

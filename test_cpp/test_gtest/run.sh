@@ -1,7 +1,9 @@
 
-rm -rf ./build;
+dir=$( cd "$( dirname "$0" )" && pwd )
+cd $dir
 
-mkdir build;
+rm -rf ./build;
+mkdir -p build;
 
 cd build;
 cmake ..;

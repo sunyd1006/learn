@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"testing"
 	"time"
 )
 
@@ -22,7 +23,7 @@ func runTask(id string, stopChan <-chan struct{}, done chan<- string, wg *sync.W
 }
 
 // close(stopChan) 是异步的close, 不会等待 stopChan 所对应的函数体运行结束和退出
-func main() {
+func TestChanCloseRoutine(t *testing.T) {
 	var wg sync.WaitGroup
 	stopChan := make(chan struct{})
 	done := make(chan string, 2)

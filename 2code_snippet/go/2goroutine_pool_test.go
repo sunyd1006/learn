@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"testing"
 	"time"
 )
 
@@ -57,7 +58,7 @@ func (p *WorkerPool) Shutdown() {
 	close(p.tasks)
 }
 
-func main() {
+func TestGoroutinePool(t *testing.T) {
 	// 创建一个协程池：3 个 worker，队列容量 5
 	pool := NewWorkerPool(3, 5)
 

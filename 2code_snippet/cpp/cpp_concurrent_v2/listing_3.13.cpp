@@ -6,8 +6,8 @@
 class dns_entry {};
 
 class dns_cache {
-    std::map<std::string, dns_entry> entries;
     std::shared_mutex entry_mutex;
+    std::map<std::string, dns_entry> entries;
 
 public:
     dns_entry find_entry(std::string const& domain) {
