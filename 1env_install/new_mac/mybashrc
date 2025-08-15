@@ -1,6 +1,16 @@
 #!/bin/bash
+echo "1env_install/new_mac/mybashrc loaded"
+DIR="$(cd "$(dirname -- "$0")" && pwd)"
 
 # ============  shell config
+function appendPathIfNotExits() {
+    pathItem=$1
+    if [[ ":$PATH:" != *":$pathItem:"* ]]; then
+        export PATH=$pathItem:$PATH
+        echo "appendPathIfNotExits: $pathItem"
+    fi
+}
+
 function load_config_from_learn() {
   if [[ ${HOME} == "/Users/sunyindong" ]]; then
     syd_dir="$HOME"  # local m1 mac
@@ -10,27 +20,86 @@ function load_config_from_learn() {
     syd_dir="${HOME}/sunyindong.syd"
   fi
   mkdir -p ${syd_dir}/codespace
+  # 主要存储公司的tool
   toolPath=${syd_dir}/tool
   mkdir -p ${toolPath}
-  export PATH=$PATH:$toolPath
-
-export LEARN_PROJECT="${syd_dir}/codespace/learn"
-bash_dir="${LEARN_PROJECT}/1env_install/new_mac/"
+  appendPathIfNotExits ${toolPath}
+}
+load_config_from_learn
+export LEARN="${syd_dir}/codespace/learn"
+bash_dir="${LEARN}/1env_install/new_mac/"
 mybashrc="${bash_dir}/mybashrc"
-mybashrc_tmp="${bash_dir}/mybashrc.tmp"
 
-alias mysource="source ${mybashrc} ; source ${mybashrc_tmp} ; source ~/.bash_profile ; source ~/.bashrc"
-# 需要持久化的保存到 mybashrc 里面
-alias vimy="vi ${mybashrc}"
-alias vicom="vi ~/.bash_profile"
-alias vitmp="vi ${mybashrc_tmp}"
+# === 个人配置整理
+prepare_bash_config() {
+    # ========== 配置文件路径和内容定义 ==========
+    local readonly MYBASHRC_PATH="/Users/sunyindong.syd/codespace/learn/1env_install/new_mac/mybashrc"
+    local readonly BASH_PROFILE="$HOME/.bash_profile"
+    local readonly BASHRC_FILE="$HOME/.bashrc"
+
+    # 要插入的配置行
+    local readonly LOAD_BASHRC="source ~/.bashrc;"
+    local readonly MYBASHRC_LINE="source $MYBASHRC_PATH"
+    local readonly BASHRC_LOCAL="touch ~/.bashrc.local; source ~/.bashrc.local;"
+
+    # ========== 辅助函数：安全插入配置行 ==========
+    insert_line_if_missing() {
+        local line="$1"
+        local file="$2"
+        local description="$3"
+
+        if [[ ! $(grep -Fx "$line" "$file" 2>/dev/null) ]]; then
+            if printf '%s\n' "$line" | cat - "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"; then
+                echo "✓ 已插入 $description 到 $file"
+            else
+                echo "✗ 插入 $description 失败" >&2
+                return 1
+            fi
+        fi
+    }
+
+    # ========== 辅助函数：安全创建软链接 ==========
+    create_symlink() {
+        local target="$1"
+        local link="$2"
+        ln -sf "$target" "$link" 2>/dev/null;
+    }
+
+    # ========== 1. 确保必要文件存在 ==========
+    touch "$BASH_PROFILE" "$BASHRC_FILE"
+
+    # ========== 2. 配置 ~/.bash_profile 加载 ~/.bashrc ==========
+    insert_line_if_missing "$LOAD_BASHRC" "$BASH_PROFILE" "bashrc 加载命令"
+
+    # ========== 3. 配置 ~/.bashrc 加载自定义配置 ==========
+    insert_line_if_missing "$MYBASHRC_LINE" "$BASHRC_FILE" "mybashrc 加载命令"
+    insert_line_if_missing "$BASHRC_LOCAL" "$BASHRC_FILE" "bashrc.local 加载命令"
+
+    # ========== 4. 创建便于管理的软链接 ==========
+    create_symlink "$BASHRC_FILE" "${DIR}/bashrc.user"
+    create_symlink "$HOME/.bashrc.local" "${DIR}/bashrc.local"
+
+    # ========== 5. 显示配置说明 ==========
+    cat << 'EOF'
+========== Bash 配置完成 ==========
+配置层级说明：
+  1. ~/.bash_profile   → 加载 ~/.bashrc (login shell 入口)
+  2. ~/.bashrc         → 加载 mybashrc + ~/.bashrc.local + 其他的配置
+优先级：~/.bash_profile < mybashrc < ~/.bashrc.local < ~/.bashrc (后加载的优先级更高)
+==================================
+EOF
+}
+prepare_bash_config
+alias vibashrc="vi ${mybashrc}"
+alias mysource="source ~/.bashrc ; "
+alias vilocal="vi ~/.bashrc.local"
 
 alias cdsyd="cd ${syd_dir}/"
 alias cdcode="cd ${syd_dir}/codespace/"
 alias cdtool="cd ${syd_dir}/tool/"
-alias cdlearn="cd ${LEARN_PROJECT}"
+alias cdlearn="cd ${LEARN}"
 
-# ======= mychine config
+# 2. mychine config
 alias ll="ls -al"                   # yymmddhhmm ：指定年月日时分，如 17022318 表示2017年2月23日18时
 alias myhalt="sudo shutdown -h"            # hh:mm ：今天某时某分
 alias myrestart="sudo shutdown -r"          # +n ：n分钟后
@@ -38,7 +107,7 @@ alias mysleep="sudo shutdown -s"           # now：现在
 alias print="printf '\e[?2004l' "
 
 
-# ========== cd alias
+# 2. cd alias
 # alias for dir、quick command、
 alias cddesktop="cd ~/Desktop"
 alias cddown="cd && cd ./Downloads"
@@ -53,9 +122,13 @@ alias cdtest="cdcode && cd  ./test"
 alias cdlearn="cdcode && cd ./learn"
 alias cdcpp="cdcode && cd ./learn/test_cpp"
 
+# github dns
+alias vihosts="sudo vim /etc/hosts"
+alias cathosts="cat /etc/hosts"
+alias flushdns="sudo killall -HUP mDNSResponder"
 
 
-# =========  git config
+# 2. git config
 alias gst="git status "
 alias ga="git add "
 alias gcm="git commit -m "
@@ -79,8 +152,13 @@ alias gge="git grep -e"
 alias ggn="git grep -n"
 
 
+# == 3. 个人运维脚本
+# bash cannot define command params, so i define a function to use it.
+# lsof: list of file, -t: only pid, -i: only file realted to internet
+alias killport='killport() { kill -9 $(lsof -t -i:$1) }; killport'
 
-# ========== ag grep
+
+# ag grep
 alias ag="ag --group"
 alias agc="ag -C "
 alias ag3="ag -C 3 "
@@ -88,20 +166,17 @@ alias ag4="ag -C 4 "
 alias agn="ag      --nogroup "
 alias agn3="ag -C 3 --nogroup "
 
-# ========== vim
+# vim
 alias vi="nvim "
 alias vim="nvim "
 
-
-
-# ========== docker config
+# docker config
 # sun add for docker-compose timeout
 export COMPOSE_HTTP_TIMEOUT=900
 export DOCKER_CLIENT_TIMEOUT=900
 
 
-
-# ========= mvn config
+# mvn config
 alias mvndown="mvn dependency:resolve -Dclassifier=sources"
 alias mvndes="mvn deploy -DaltDeploymentRepository=snapshots::default::http://mvnrepo.alibaba-inc.com/mvn/snapshots -Dmaven.test.skip=true -Dgpg.skip"
 alias mvnp="mvn clean package"
@@ -122,17 +197,14 @@ alias cc="g++ -std=c++17 -g -pthread "
 alias g14="g++ -std=c++14 -g -pthread "
 alias g17="g++ -std=c++17 -g -pthread "
 
-alias mm="sh ${dev_tool}/mysync.sh"
-alias mytool="sh ${dev_tool}/mytool.sh"
-
-
 # ======= dev_tool
 function ms {
-    ${LEARN_PROJECT}/1env_install/new_mac/dev_tool/syd_dev_tool/mysync.sh $@
+    ${LEARN}/1env_install/new_mac/dev_tool/mysync.sh $@
 }
 
 # ==== load customed path
-export PATH="~/.local/bin:Users/sunyindong.syd/.nvm/versions/node/v22.18.0/bin/:$PATH"
+appendPathIfNotExits ~/.local/bin:/Users/sunyindong.syd/.nvm/versions/node/v22.18.0/bin
+
 
 # ======== source
 

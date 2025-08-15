@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ${LEARN_PROJECT}/0lib/shell/common.sh
+source ${LEARN}/0lib/shell/common.sh
 
 SHELL_DIR=$(cd -P -- $(dirname -- ${BASH_SOURCE:-$0}) && pwd)
 function bak_old_nvim() {
