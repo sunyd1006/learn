@@ -1,0 +1,12 @@
+{
+    "headless": false,
+    "timeout": 30000,
+    "login": {
+        "username": "your_username",
+        "password": "your_password"
+    },
+    "publish": {
+        "default_category": "科技",
+        "delay_seconds": 3
+    }
+}
