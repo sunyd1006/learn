@@ -20,6 +20,8 @@ function load_config_from_learn() {
     syd_dir="$HOME"  # correct mac
   elif [[ ${HOME} == "/Users/bytedance" ]]; then
     syd_dir="$HOME"  # correct bytedance
+  elif [[ ${HOME} == "/home/sunyindong" ]]; then
+    syd_dir="$HOME"  # correct bytedance
   else
     syd_dir="${HOME}/sunyindong.syd"
   fi
