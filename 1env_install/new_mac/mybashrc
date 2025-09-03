@@ -1,6 +1,8 @@
 #!/bin/bash
-echo "1env_install/new_mac/mybashrc loaded"
-DIR="$(cd "$(dirname -- "$0")" && pwd)"
+echo -e "1env_install/new_mac/mybashrc loaded! \n"
+
+# 使用 BASH_SOURCE[0] 获取当前文件的路径
+scriptdir="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # ============  shell config
 function appendPathIfNotExits() {
@@ -76,8 +78,8 @@ prepare_bash_config() {
     insert_line_if_missing "$BASHRC_LOCAL" "$BASHRC_FILE" "bashrc.local 加载命令"
 
     # ========== 4. 创建便于管理的软链接 ==========
-    create_symlink "$BASHRC_FILE" "${DIR}/bashrc.user"
-    create_symlink "$HOME/.bashrc.local" "${DIR}/bashrc.local"
+    create_symlink "$BASHRC_FILE" "${scriptdir}/bashrc.user"
+    create_symlink "$HOME/.bashrc.local" "${scriptdir}/bashrc.local"
 
     # ========== 5. 显示配置说明 ==========
     cat << 'EOF'
@@ -140,6 +142,7 @@ alias gcp="git cherry-pick "
 
 alias gbr="git branch "
 alias gl="git log "
+alias gls="alias gls="git log --oneline -S "
 alias glg="git log --graph --decorate --oneline --all"
 
 alias gc="git clean "

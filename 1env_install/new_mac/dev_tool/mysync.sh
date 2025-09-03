@@ -21,7 +21,7 @@ case "$lower_target" in
         REMOTE_BASE_DIR="/apsarapangu/disk11/sunyindong.syd"
         LOCAL_BASE_DIR="/Users/sunyindong.syd/codespace/develop_ali"
         ;;
-    "at-odps-dev"|"")
+    "at-odps-dev"|"dev")
         REMOTE_HOSTNAME="AT-ODPS-DEV"
         REMOTE_IP="11.158.199.43"
         REMOTE_USER="admin"
