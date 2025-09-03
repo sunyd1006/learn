@@ -142,7 +142,7 @@ alias gcp="git cherry-pick "
 
 alias gbr="git branch "
 alias gl="git log "
-alias gls="alias gls="git log --oneline -S "
+alias gls="git log --oneline -S "
 alias glg="git log --graph --decorate --oneline --all"
 
 alias gc="git clean "
