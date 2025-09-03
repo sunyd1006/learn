@@ -7,7 +7,7 @@ function print_center() {
 print_center "** Shell菜鸟教程 https://www.runoob.com/linux/linux-shell.html **"
 
 print_center "Shell 变量 https://www.runoob.com/linux/linux-shell-variable.html"
-# 2 $skill ${skill}只是变量位置跟清楚一些 
+# 2 $skill ${skill}只是变量位置跟清楚一些
 echo "I am good at ${skill}Script"
 myUrl="https://www.runoob.com"
 readonly myUrl  # 只读变量
@@ -16,7 +16,7 @@ unset myUrl2     # 删除变量
 
 string="abcd"
 echo "字符串长度 " ${#string}   # 输出 4
-echo "abcd[0:1): " ${string:0:1} 
+echo "abcd[0:1): " ${string:0:1}
 
 
 
@@ -207,7 +207,7 @@ done
 int=1
 while(( $int <= 5 ) )
 do
-    echo '$int is '"$int" 
+    echo '$int is '"$int"
     let "int++"         # let表达式可以简写$int为int
 done
 
@@ -260,7 +260,7 @@ print_center "Shell 函数 https://www.runoob.com/linux/linux-shell-func.html"
 # 在函数体内获取形参获取：
 #   1. $n, 当n>=10时，需要使用${n}来获取参数
 #   2. $@: 以每个变量带引号的方式返回
-# 函数返回值获取: $? 
+# 函数返回值获取: $?
 
 funWithParam(){
     echo "第一个参数为 $1 !"
@@ -348,7 +348,7 @@ function print_center2() {
 # 当前的 Linux 系统安装的所有 Shell
 cat /etc/shells
 # 当前默认的 Shell
-echo $SHELL 
+echo $SHELL
 # bash 的版本
 echo $(bash --version)
 echo $BASH_VERSION
@@ -414,13 +414,13 @@ echo -e "*.txt      :" *.txt
 echo -e ".*         :" .*
 echo -e ".[!.]*     :" .[!.]*   # 不匹配.和..文件， 输出.[!.]* 表示不存在隐藏文件
 
-# mkdir {2007..2009}-{01..12} 
+# mkdir {2007..2009}-{01..12}
 for i in {1..4}
 do
   echo "this is used $i in {1..4} "
 done
 
-echo "echo {001..5}    :" {001..5} 
+echo "echo {001..5}    :" {001..5}
 echo "返回所有匹配给定字符串string的变量名    :" ${!S*}
 echo "$(...)可以扩展成另一个命令的运行结果    :" $(date)
 echo '$((2 + 2))    :' $((2 + 2))

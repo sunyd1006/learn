@@ -1,5 +1,5 @@
 #!/bin/bash
-echo -e "1env_install/new_mac/mybashrc loaded! \n"
+echo -e "\n\n========== Bash 配置 ==========\n1env_install/new_mac/bash_common loaded! \n"
 
 # 使用 BASH_SOURCE[0] 获取当前文件的路径
 scriptdir="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -18,6 +18,8 @@ function load_config_from_learn() {
     syd_dir="$HOME"  # local m1 mac
   elif [[ ${HOME} == "/Users/sunyindong.syd" ]]; then
     syd_dir="$HOME"  # correct mac
+  elif [[ ${HOME} == "/Users/bytedance" ]]; then
+    syd_dir="$HOME"  # correct bytedance
   else
     syd_dir="${HOME}/sunyindong.syd"
   fi
@@ -28,37 +30,32 @@ function load_config_from_learn() {
   appendPathIfNotExits ${toolPath}
 }
 load_config_from_learn
+
 export LEARN="${syd_dir}/codespace/learn"
-bash_dir="${LEARN}/1env_install/new_mac/"
-mybashrc="${bash_dir}/mybashrc"
+bash_common="${LEARN}/1env_install/new_mac/bash_common"
+
+source ${LEARN}/0lib/shell/common.sh
 
 # === 个人配置整理
 prepare_bash_config() {
     # ========== 配置文件路径和内容定义 ==========
-    local readonly MYBASHRC_PATH="/Users/sunyindong.syd/codespace/learn/1env_install/new_mac/mybashrc"
-    local readonly BASH_PROFILE="$HOME/.bash_profile"
-    local readonly BASHRC_FILE="$HOME/.bashrc"
+    # 生效时机：在登录式交互 Shell（Interactive Login Shell）启动时加载。
+    # 当 bash 以登录模式启动时（如 ssh 登录、bash -l），会依次检查并加载以下文件中的第一个存在的文件（优先级从高到低）：
+    #     ~/.bash_profile
+    #     ~/.bash_login
+    #     ~/.profile
+    local BASH_PROFILE="$HOME/.bash_profile"
+
+    # 当 bash 以非登录模式启动时（如图形终端直接打开、bash 命令手动启动），只加载 ~/.bashrc，不会检查 ~/.bash_profile 等登录配置文件。
+    # 优先级：此时 ~/.bashrc 是唯一被加载的配置文件，没有其他文件与其竞争。
+    local BASHRC_FILE="$HOME/.bashrc"
+
+    local ZSHRC_FILE="$HOME/.zshrc"
 
     # 要插入的配置行
-    local readonly LOAD_BASHRC="source ~/.bashrc;"
-    local readonly MYBASHRC_LINE="source $MYBASHRC_PATH"
-    local readonly BASHRC_LOCAL="touch ~/.bashrc.local; source ~/.bashrc.local;"
-
-    # ========== 辅助函数：安全插入配置行 ==========
-    insert_line_if_missing() {
-        local line="$1"
-        local file="$2"
-        local description="$3"
-
-        if [[ ! $(grep -Fx "$line" "$file" 2>/dev/null) ]]; then
-            if printf '%s\n' "$line" | cat - "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"; then
-                echo "✓ 已插入 $description 到 $file"
-            else
-                echo "✗ 插入 $description 失败" >&2
-                return 1
-            fi
-        fi
-    }
+    local LOAD_BASHRC="source ~/.bashrc "
+    local MYBASHRC_LINE="source ${bash_common}"
+    local BASHRC_LOCAL="touch ~/.bashrc.local; source ~/.bashrc.local;"
 
     # ========== 辅助函数：安全创建软链接 ==========
     create_symlink() {
@@ -68,32 +65,42 @@ prepare_bash_config() {
     }
 
     # ========== 1. 确保必要文件存在 ==========
-    touch "$BASH_PROFILE" "$BASHRC_FILE"
+    touch "$BASH_PROFILE" "$BASHRC_FILE" "$ZSHRC_FILE"
 
-    # ========== 2. 配置 ~/.bash_profile 加载 ~/.bashrc ==========
-    insert_line_if_missing "$LOAD_BASHRC" "$BASH_PROFILE" "bashrc 加载命令"
+    # ========== 2. 配置 ~/.bash_profile 和 ~/.zshrc 加载 ~/.bashrc ==========
+    check_and_prepend "$BASH_PROFILE" "$LOAD_BASHRC"
+    check_and_prepend "$ZSHRC_FILE"   "$LOAD_BASHRC"
 
     # ========== 3. 配置 ~/.bashrc 加载自定义配置 ==========
-    insert_line_if_missing "$MYBASHRC_LINE" "$BASHRC_FILE" "mybashrc 加载命令"
-    insert_line_if_missing "$BASHRC_LOCAL" "$BASHRC_FILE" "bashrc.local 加载命令"
+    check_and_prepend "$BASHRC_FILE" "$MYBASHRC_LINE; "
+    check_and_append "$BASHRC_FILE"  "${BASHRC_LOCAL}"
 
     # ========== 4. 创建便于管理的软链接 ==========
-    create_symlink "$BASHRC_FILE" "${scriptdir}/bashrc.user"
-    create_symlink "$HOME/.bashrc.local" "${scriptdir}/bashrc.local"
+    # 查看cwd是否包含learn 和 new_mac 目录，如果不包含，就不创建软链接
+    if [[ ${PWD} = *"learn"* && ${PWD} = *"new_mac"* ]]; then
+        create_symlink "$BASHRC_FILE" "${scriptdir}/home_bashrc"
+        create_symlink "$HOME/.bashrc.local" "${scriptdir}/home_bashrc.local"
+    fi
 
     # ========== 5. 显示配置说明 ==========
     cat << 'EOF'
-========== Bash 配置完成 ==========
-配置层级说明：
-  1. ~/.bash_profile   → 加载 ~/.bashrc (login shell 入口)
-  2. ~/.bashrc         → 加载 mybashrc + ~/.bashrc.local + 其他的配置
-优先级：~/.bash_profile < mybashrc < ~/.bashrc.local < ~/.bashrc (后加载的优先级更高)
+========== Bash 配置完成
+设计说明: 登录shell ~/.bash_profile, 非登录shell ~/.bashrc / ~/.zshrc
+sun个人配置上：
+  - ~/.bash_profile         → 加载 ~/.bashrc
+  - ~/.bashrc 和 ~/.zshrc   → 加载 bash_common + ... +  ~/.bashrc.local + 其他的配置
+个人记忆：~/.bash_profile < bash_common < ~/.bashrc.local < ~/.bashrc 剩余配置 (后加载的优先级更高)
 ==================================
+
 EOF
 }
-prepare_bash_config
-alias vibashrc="vi ${mybashrc}"
-alias mysource="source ~/.bashrc ; "
+# 为了避免bashrc->bash_common->bashrc 循环加载，所以在bash_common中只加载一次bashrc
+# 在环境变量LOAD_FIRST 为true时，才执行函数
+if [[ ${LOAD_FIRST} == "true" ]]; then
+    prepare_bash_config
+fi
+alias vibashrc="vi ${bash_common}"
+alias mysource="source ${bash_common} "
 alias vilocal="vi ~/.bashrc.local"
 
 alias cdsyd="cd ${syd_dir}/"
@@ -101,7 +108,7 @@ alias cdcode="cd ${syd_dir}/codespace/"
 alias cdtool="cd ${syd_dir}/tool/"
 alias cdlearn="cd ${LEARN}"
 
-# 2. mychine config
+# 2. my machine config
 alias ll="ls -al"                   # yymmddhhmm ：指定年月日时分，如 17022318 表示2017年2月23日18时
 alias myhalt="sudo shutdown -h"            # hh:mm ：今天某时某分
 alias myrestart="sudo shutdown -r"          # +n ：n分钟后
@@ -118,8 +125,9 @@ alias cdenv="cd && cd ./environment"
 alias cdwork="cd && cd ./workspace"
 alias cdcode="cd && cd ./codespace"
 alias cdjava="cdcode && cd ./TestJava"
-alias cdali="cdcode && cd ./develop_ali"
+alias cdcom="cdcode && cd ./company"
 alias cdtest="cdcode && cd  ./test"
+alias cdnotes="cddesktop && cd notes"
 
 alias cdlearn="cdcode && cd ./learn"
 alias cdcpp="cdcode && cd ./learn/test_cpp"
@@ -204,10 +212,3 @@ alias g17="g++ -std=c++17 -g -pthread "
 function ms {
     ${LEARN}/1env_install/new_mac/dev_tool/mysync.sh $@
 }
-
-# ==== load customed path
-appendPathIfNotExits ~/.local/bin:/Users/sunyindong.syd/.nvm/versions/node/v22.18.0/bin
-
-
-# ======== source
-
