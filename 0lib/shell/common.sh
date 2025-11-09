@@ -3,20 +3,27 @@
 SHELL_DIR=$(cd -P -- $(dirname -- ${BASH_SOURCE:-$0}) && pwd)
 PROJECT_DIR=$(realpath $SHELL_DIR/../../)
 
-echo "PROJECT_DIR: $PROJECT_DIR"
-echo "SHELL_DIR: $SHELL_DIR"
-
+VERBOSE=${VERBOSE:-"false"}
 function log_info() {
-    echo "[INFO] $1 "
+    if [[ ${VERBOSE} == "true" ]]; then
+        echo "[INFO] $1 "
+    fi
 }
 
 function log_warn() {
-    echo -e "\033[33m[WARNING] $1 \033[0m"
+    if [[ ${VERBOSE} == "true" ]]; then
+        echo -e "\033[33m[WARNING] $1 \033[0m"
+    fi
 }
 
 function log_error() {
-    echo -e "\033[31m[ERROR] $1 \033[0m"
+    if [[ ${VERBOSE} == "true" ]]; then
+        echo -e "\033[31m[ERROR] $1 \033[0m"
+    fi
 }
+
+log_info "PROJECT_DIR: $PROJECT_DIR"
+log_info "SHELL_DIR: $SHELL_DIR"
 
 # 函数功能：检查指定文件是否包含目标内容，包含则退出，不包含则添加内容到文件首行
 # 参数说明：

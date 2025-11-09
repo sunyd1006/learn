@@ -1,5 +1,4 @@
 #!/bin/bash
-echo -e "\n\n========== Bash 配置 ==========\n1env_install/new_mac/bash_common loaded! \n"
 
 # 使用 BASH_SOURCE[0] 获取当前文件的路径
 scriptdir="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -9,7 +8,7 @@ function appendPathIfNotExits() {
     pathItem=$1
     if [[ ":$PATH:" != *":$pathItem:"* ]]; then
         export PATH=$pathItem:$PATH
-        echo "appendPathIfNotExits: $pathItem"
+        # echo "appendPathIfNotExits: $pathItem"
     fi
 }
 
@@ -37,6 +36,8 @@ export LEARN="${syd_dir}/codespace/learn"
 bash_common="${LEARN}/1env_install/new_mac/bash_common"
 
 source ${LEARN}/0lib/shell/common.sh
+log_info "\n\n========== Bash 配置 ==========\n1env_install/new_mac/bash_common loaded! \n"
+
 
 # === 个人配置整理
 prepare_bash_config() {
