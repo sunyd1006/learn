@@ -102,7 +102,7 @@ if [[ ${LOAD_FIRST} == "true" ]]; then
     prepare_bash_config
 fi
 alias vibashrc="vi ${bash_common}"
-alias mysource="source ${bash_common} "
+alias mysource="source ~/.bashrc "
 alias vilocal="vi ~/.bashrc.local"
 
 alias cdsyd="cd ${syd_dir}/"

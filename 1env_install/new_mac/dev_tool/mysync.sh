@@ -12,16 +12,18 @@ usage() {
 
 ######## config ########
 
+# 设置默认目标环境，如果TARGET环境变量未设置，则使用"dev"作为默认值
+TARGET=${TARGET:-"default"}
 lower_target=$(echo "$TARGET" | tr '[:upper:]' '[:lower:]')
 case "$lower_target" in
-    "at-40n"|"40n"|"at40n")
-        REMOTE_HOSTNAME="AT-40N"
-        REMOTE_IP="11.158.199.145"
-        REMOTE_USER="admin"
-        REMOTE_BASE_DIR="/apsarapangu/disk11/sunyindong.syd"
-        LOCAL_BASE_DIR="/Users/sunyindong.syd/codespace/develop_ali"
+    "dev"|"default")
+        REMOTE_HOSTNAME="DEV"
+        REMOTE_IP="10.37.125.27"
+        REMOTE_USER="sunyindong"
+        REMOTE_BASE_DIR="/home/sunyindong/codespace"
+        LOCAL_BASE_DIR="/Users/bytedance/codespace"
         ;;
-    "at-odps-dev"|"dev")
+    "at-odps-dev")
         REMOTE_HOSTNAME="AT-ODPS-DEV"
         REMOTE_IP="11.158.199.43"
         REMOTE_USER="admin"

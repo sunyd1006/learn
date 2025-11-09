@@ -48,3 +48,4 @@ TestJava/GradleLearn/build/**
 .tmp*/
 env/
 tmp_note.md
+.netrwhist
