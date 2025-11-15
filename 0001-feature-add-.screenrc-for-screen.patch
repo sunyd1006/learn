@@ -1,0 +1,313 @@
+From fb16155faac8461ef2bdc7267cd2c2f44190f9ed Mon Sep 17 00:00:00 2001
+From: sunyd1006 <1404131532@qq.com>
+Date: Sat, 15 Nov 2025 14:36:53 +0800
+Subject: [PATCH] feature: add .screenrc for screen
+
+---
+ 1env_install/new_mac/.screenrc        |  21 +++++
+ bashrc.user                           |   1 -
+ test_python/.gitignore                |   1 +
+ test_python/bak.txt                   |   1 +
+ test_python/mysite/manage.py          |  22 +++++
+ test_python/mysite/mysite/__init__.py |   0
+ test_python/mysite/mysite/asgi.py     |  16 ++++
+ test_python/mysite/mysite/settings.py | 123 ++++++++++++++++++++++++++
+ test_python/mysite/mysite/urls.py     |  22 +++++
+ test_python/mysite/mysite/wsgi.py     |  16 ++++
+ 10 files changed, 222 insertions(+), 1 deletion(-)
+ create mode 100644 1env_install/new_mac/.screenrc
+ delete mode 120000 bashrc.user
+ create mode 100644 test_python/.gitignore
+ create mode 100644 test_python/bak.txt
+ create mode 100755 test_python/mysite/manage.py
+ create mode 100644 test_python/mysite/mysite/__init__.py
+ create mode 100644 test_python/mysite/mysite/asgi.py
+ create mode 100644 test_python/mysite/mysite/settings.py
+ create mode 100644 test_python/mysite/mysite/urls.py
+ create mode 100644 test_python/mysite/mysite/wsgi.py
+
+diff --git a/1env_install/new_mac/.screenrc b/1env_install/new_mac/.screenrc
+new file mode 100644
+index 0000000..7db1496
+--- /dev/null
++++ b/1env_install/new_mac/.screenrc
+@@ -0,0 +1,21 @@
++# backtick 命令定义（ID = 1）：每隔 2 秒运行一次 shell 命令，
++# 获取 /proc/loadavg 中前 3 个字段（1 分钟、5 分钟、15 分钟的 CPU load 值）
++backtick 1 2 2 /bin/sh -c "cut -d' ' -f1-3 /proc/loadavg"
++
++# 启用硬状态栏，并且始终显示在最下方 (alwayslastline)
++hardstatus alwayslastline
++
++# 定义状态栏字符串
++# %{=b}：设置状态栏文本属性，= 表示重置属性，然后 b 是背景色／前景色组合（这里是“黑色前景 + 默认背景”或类似，具体取决于你的 termcap/terminal 支持）。
++# %{b}：再次设置文本属性为黑色（或某种 “b” 语义，具体与屏幕的颜色定义有关）。
++# %-w：显示 “窗口列表”，并且在窗口名前面加上一个 -（表示非当前窗口）。
++# %{.BW}：改变状态栏中文本／背景的颜色／属性。这里 .BW 意味着前景和背景分别是 B (亮？) 和 W (白？具体含义和你 termcap 配置有关)。
++# [%n %t]：在方括号里显示窗口编号 %n 和窗口标题 %t。
++# %{-}：重置颜色／属性。
++# %+w：继续列出窗口，但这是 “当前窗口” 或其他逻辑相关窗口部分。（%-w … %+w 是显示整个窗口列表且高亮当前窗口的一种常见组合。）
++#  %=：%= 是一个对齐控制符，把后面的内容推到状态栏的右边（将左边和右边部分分开对齐）。
++# %{w}：切换文本颜色／属性，这里是 “w” (白色) 用于接下来显示 load 值。
++# (%1\)：这是 backtick 输出。1 是你定义 backtick 的 ID（backtick 1 …），``%1 `` 会被替换成该 backtick 命令最近一次执行后的输出，也就是三个 load 值（“1min 5min 15min”）。外面加了括号 (...)，让状态栏里显示成 `(0.29 0.27 0.27)` 这种形式。
++#  %Y-%m-%d：日期格式，%Y 年，%m 月，%d 日。
++#  %c:%s：时间格式，%c 是当前小时和分钟，%s 是秒。这样你能看到精确到秒的时间。
++hardstatus string '%{=b}%{b}%-w%{.BW}[%n %t]%{-}%+w %=%{w}(%1`) %Y-%m-%d %c:%s'
+\ No newline at end of file
+diff --git a/bashrc.user b/bashrc.user
+deleted file mode 120000
+index b06380e..0000000
+--- a/bashrc.user
++++ /dev/null
+@@ -1 +0,0 @@
+-/Users/sunyindong.syd/.bashrc
+\ No newline at end of file
+diff --git a/test_python/.gitignore b/test_python/.gitignore
+new file mode 100644
+index 0000000..1d17dae
+--- /dev/null
++++ b/test_python/.gitignore
+@@ -0,0 +1 @@
++.venv
+diff --git a/test_python/bak.txt b/test_python/bak.txt
+new file mode 100644
+index 0000000..e45bab5
+--- /dev/null
++++ b/test_python/bak.txt
+@@ -0,0 +1 @@
++ python -m django startproject mysite
+diff --git a/test_python/mysite/manage.py b/test_python/mysite/manage.py
+new file mode 100755
+index 0000000..a7da667
+--- /dev/null
++++ b/test_python/mysite/manage.py
+@@ -0,0 +1,22 @@
++#!/usr/bin/env python
++"""Django's command-line utility for administrative tasks."""
++import os
++import sys
++
++
++def main():
++    """Run administrative tasks."""
++    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
++    try:
++        from django.core.management import execute_from_command_line
++    except ImportError as exc:
++        raise ImportError(
++            "Couldn't import Django. Are you sure it's installed and "
++            "available on your PYTHONPATH environment variable? Did you "
++            "forget to activate a virtual environment?"
++        ) from exc
++    execute_from_command_line(sys.argv)
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/test_python/mysite/mysite/__init__.py b/test_python/mysite/mysite/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/test_python/mysite/mysite/asgi.py b/test_python/mysite/mysite/asgi.py
+new file mode 100644
+index 0000000..cce50dc
+--- /dev/null
++++ b/test_python/mysite/mysite/asgi.py
+@@ -0,0 +1,16 @@
++"""
++ASGI config for mysite project.
++
++It exposes the ASGI callable as a module-level variable named ``application``.
++
++For more information on this file, see
++https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
++"""
++
++import os
++
++from django.core.asgi import get_asgi_application
++
++os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
++
++application = get_asgi_application()
+diff --git a/test_python/mysite/mysite/settings.py b/test_python/mysite/mysite/settings.py
+new file mode 100644
+index 0000000..6b26857
+--- /dev/null
++++ b/test_python/mysite/mysite/settings.py
+@@ -0,0 +1,123 @@
++"""
++Django settings for mysite project.
++
++Generated by 'django-admin startproject' using Django 4.2.26.
++
++For more information on this file, see
++https://docs.djangoproject.com/en/4.2/topics/settings/
++
++For the full list of settings and their values, see
++https://docs.djangoproject.com/en/4.2/ref/settings/
++"""
++
++from pathlib import Path
++
++# Build paths inside the project like this: BASE_DIR / 'subdir'.
++BASE_DIR = Path(__file__).resolve().parent.parent
++
++
++# Quick-start development settings - unsuitable for production
++# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
++
++# SECURITY WARNING: keep the secret key used in production secret!
++SECRET_KEY = 'django-insecure-9nc4x3u7r&2#ycb3ppxxi0g&v_8$^#8hen9yuz7svk@vi@zec('
++
++# SECURITY WARNING: don't run with debug turned on in production!
++DEBUG = True
++
++ALLOWED_HOSTS = []
++
++
++# Application definition
++
++INSTALLED_APPS = [
++    'django.contrib.admin',
++    'django.contrib.auth',
++    'django.contrib.contenttypes',
++    'django.contrib.sessions',
++    'django.contrib.messages',
++    'django.contrib.staticfiles',
++]
++
++MIDDLEWARE = [
++    'django.middleware.security.SecurityMiddleware',
++    'django.contrib.sessions.middleware.SessionMiddleware',
++    'django.middleware.common.CommonMiddleware',
++    'django.middleware.csrf.CsrfViewMiddleware',
++    'django.contrib.auth.middleware.AuthenticationMiddleware',
++    'django.contrib.messages.middleware.MessageMiddleware',
++    'django.middleware.clickjacking.XFrameOptionsMiddleware',
++]
++
++ROOT_URLCONF = 'mysite.urls'
++
++TEMPLATES = [
++    {
++        'BACKEND': 'django.template.backends.django.DjangoTemplates',
++        'DIRS': [],
++        'APP_DIRS': True,
++        'OPTIONS': {
++            'context_processors': [
++                'django.template.context_processors.debug',
++                'django.template.context_processors.request',
++                'django.contrib.auth.context_processors.auth',
++                'django.contrib.messages.context_processors.messages',
++            ],
++        },
++    },
++]
++
++WSGI_APPLICATION = 'mysite.wsgi.application'
++
++
++# Database
++# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
++
++DATABASES = {
++    'default': {
++        'ENGINE': 'django.db.backends.sqlite3',
++        'NAME': BASE_DIR / 'db.sqlite3',
++    }
++}
++
++
++# Password validation
++# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
++
++AUTH_PASSWORD_VALIDATORS = [
++    {
++        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
++    },
++    {
++        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
++    },
++    {
++        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
++    },
++    {
++        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
++    },
++]
++
++
++# Internationalization
++# https://docs.djangoproject.com/en/4.2/topics/i18n/
++
++LANGUAGE_CODE = 'en-us'
++
++TIME_ZONE = 'UTC'
++
++USE_I18N = True
++
++USE_TZ = True
++
++
++# Static files (CSS, JavaScript, Images)
++# https://docs.djangoproject.com/en/4.2/howto/static-files/
++
++STATIC_URL = 'static/'
++
++# Default primary key field type
++# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
++
++DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+diff --git a/test_python/mysite/mysite/urls.py b/test_python/mysite/mysite/urls.py
+new file mode 100644
+index 0000000..79d5460
+--- /dev/null
++++ b/test_python/mysite/mysite/urls.py
+@@ -0,0 +1,22 @@
++"""
++URL configuration for mysite project.
++
++The `urlpatterns` list routes URLs to views. For more information please see:
++    https://docs.djangoproject.com/en/4.2/topics/http/urls/
++Examples:
++Function views
++    1. Add an import:  from my_app import views
++    2. Add a URL to urlpatterns:  path('', views.home, name='home')
++Class-based views
++    1. Add an import:  from other_app.views import Home
++    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
++Including another URLconf
++    1. Import the include() function: from django.urls import include, path
++    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
++"""
++from django.contrib import admin
++from django.urls import path
++
++urlpatterns = [
++    path('admin/', admin.site.urls),
++]
+diff --git a/test_python/mysite/mysite/wsgi.py b/test_python/mysite/mysite/wsgi.py
+new file mode 100644
+index 0000000..4ce2cc5
+--- /dev/null
++++ b/test_python/mysite/mysite/wsgi.py
+@@ -0,0 +1,16 @@
++"""
++WSGI config for mysite project.
++
++It exposes the WSGI callable as a module-level variable named ``application``.
++
++For more information on this file, see
++https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
++"""
++
++import os
++
++from django.core.wsgi import get_wsgi_application
++
++os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
++
++application = get_wsgi_application()
+-- 
+2.20.1
+

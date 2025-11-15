@@ -22,6 +22,11 @@ brew install wget
 brew install openjdk
 brew install go
 brew install helm
+brew install tree
+
+# https://github.com/ggreer/the_silver_searcher
+brew install the_silver_searcher
+# apt-get install silversearcher-ag
 
 # -- 3. 安装字体
 brew install --cask font-hack-nerd-font
