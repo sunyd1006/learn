@@ -21,7 +21,11 @@ function load_config_from_learn() {
     syd_dir="$HOME"  # correct bytedance
   elif [[ ${HOME} == "/home/sunyindong" ]]; then
     syd_dir="$HOME"  # correct bytedance
+  elif [[ ${HOME} == "/home/tiger" ]]; then
+#   merlin machine
+    syd_dir="$HOME"  # correct bytedance
   else
+    log_error "Unknown HOME: ${HOME}"
     syd_dir="${HOME}/sunyindong.syd"
   fi
   mkdir -p ${syd_dir}/codespace
@@ -181,7 +185,6 @@ alias agn="ag      --nogroup "
 alias agn3="ag -C 3 --nogroup "
 
 # vim
-alias vi="nvim "
 alias vim="nvim "
 
 # docker config
