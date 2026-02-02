@@ -1,0 +1,16 @@
+{
+    "headless": false,
+    "timeout": 30000,
+    "manual_login": true,
+    "manual_login_wait_seconds": 10,
+    "storage_state_path": ".local_storage/toutiao_storage_state.json",
+    "storage_state_save_path": ".local_storage/toutiao_storage_state.json",
+    "login": {
+        "username": "",
+        "password": ""
+    },
+    "publish": {
+        "default_category": "科技",
+        "delay_seconds": 3
+    }
+}

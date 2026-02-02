@@ -1,0 +1,8 @@
+# 兼容你希望“从 .venv 加载账号密码”的用法：
+# 1) 如果你的项目里存在 .venv 目录（uv 虚拟环境），请不要把密钥写进去。
+# 2) 建议把密钥写到 .env（参考 .env.example）。
+# 3) 如果你确实要用一个文件来保存变量，可将本文件复制为 .env。
+
+TOUTIAO_USERNAME=
+TOUTIAO_PASSWORD=
+

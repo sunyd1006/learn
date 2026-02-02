@@ -1,48 +1,41 @@
 # AGENTS.md
 
-This document provides a high-level overview of the codebase architecture and structure to help agents and users quickly understand the project.
+本文档用于快速理解仓库结构与开发约定，帮助在该仓库中进行高效协作与自动化操作。
 
-## 1. Project Overview
+## 1. 项目概览
 
-This repository is a comprehensive learning environment with a variety of code examples and projects in multiple programming languages. The primary focus is on C++, but it also includes significant code for Java, Go, Python, and machine learning. The repository is structured as a collection of individual projects and examples, rather than a single application.
+这是一个综合性的学习与实验仓库，包含多语言代码示例与小型项目。主要方向是 C++，同时覆盖 Java、Go、Python、机器学习等内容。仓库以“多个独立示例/子模块”的形式组织，而不是单体应用。
 
-## 2. Build & Commands
+## 2. 目录结构速览
 
-The primary build system for C++ projects is CMake.
+- `test_cpp/`：C++ 学习与测试用例（含 gtest、cmake、concurrent、primer 等）
+- `2code_snippet/`：多语言代码片段集合（cpp/go/python）
+- `demo_repo/`：可运行的小型示例或演示项目
+- `ml_repo/`：机器学习相关材料与代码（D2L、各框架示例）
+- `1env_install/`：环境配置脚本与工具安装说明
+- `0lib/`：可复用的工具库与脚本
 
-### Building C++ Projects
+## 3. 各语言环境配置说明
 
-To build the main C++ executable, follow these steps:
-```bash
-mkdir build
-cd build
-cmake ..
-make
-```
+- Python：把包含 `readme.md` 或者 `README.md` 的目录视为子模块。如果子模块中包含 Python 脚本，请使用 `uv` 管理该子模块的虚拟环境与依赖。
+- C++：仓库根目录使用 CMake 管理，可在根目录新建 `build/` 编译。
+- Go/Java：以各自目录中的 `go.mod`、`pom.xml` 或者 `Makefile` 为准，按子模块独立构建与运行。
 
-### Running Tests and Examples
+## 4. 常用构建与运行
 
-Many directories contain specific scripts to run tests or examples. Here are a few key scripts:
+- CMake 构建（根目录）：
+  - `mkdir build && cd build`
+  - `cmake ..`
+  - `make`
+- gtest 运行（示例）：
+  - `cd test_cpp/test_gtest`
+  - `./run.sh`
+- 代码片段（示例）：
+  - `cd test_cpp/code_snippet`
+  - `./run.sh`
 
-- `test_cpp/code_snippet/run.sh`: Runs standalone C++ code examples.
-- `test_cpp/test_gtest/run.sh`: Executes Google Test examples.
-- `test_cpp/test_jni/run.sh`: Runs Java Native Interface (JNI) examples.
+## 5. 安全与配置约定
 
-## 3. Code Style
-
-While there are no explicitly defined coding style guidelines in the repository, the existing code generally follows standard conventions for each language. When contributing, it is recommended to follow the style of the existing code in the relevant directory.
-
-## 4. Testing
-
-The repository uses Google Test for C++ testing. The main test files are located in `test_cpp/test_gtest/`. To run the tests, use the `run.sh` script in that directory.
-
-## 5. Security
-
-There are no specific security guidelines documented in the repository. However, as a general practice, be mindful of the following:
-- Avoid hardcoding sensitive information such as passwords or API keys.
-- Be cautious when handling user input to prevent common vulnerabilities like injection attacks.
-- Keep dependencies up-to-date to avoid known vulnerabilities.
-
-## 6. Configuration
-
-The repository contains environment setup scripts in the `1env_install/` directory. These scripts can be used to configure a development environment for the various languages and tools used in the repository. For specific configurations, refer to the `README.md` files within the subdirectories of `1env_install/`.
+- 不要在代码中硬编码密码、AK/SK、Cookie 等敏感信息。
+- 处理外部输入时避免注入风险，并保持依赖更新。
+- 环境配置脚本集中在 `1env_install/`，优先参考其中各子目录的 README。

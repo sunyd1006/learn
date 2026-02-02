@@ -39,6 +39,7 @@ TestJava/GradleLearn/bin/
 **/.idea/**
 **/code.iml
 tmp/out/**
+tmp/
 **/*.dSYM/**
 TestJava/GradleLearn/.gradle/**
 TestJava/GradleLearn/build/**
@@ -47,8 +48,12 @@ TestJava/GradleLearn/build/**
 
 ### disable google drive file upload.
 .tmp*/
-env/
 tmp_note.md
 .netrwhist
 
-.venv/
+**/.venv/
+**/node_modules/
+.local_storage/
+
+**/tmp/
+**/.env
