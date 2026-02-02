@@ -49,3 +49,5 @@ TestJava/GradleLearn/build/**
 env/
 tmp_note.md
 .netrwhist
+
+.venv/

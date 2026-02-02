@@ -30,6 +30,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+"""
+django.contrib.admin——管理站点。你很快就会用到它。
+django.contrib.auth——一个认证系统。
+django.contrib.contenttypes——一个内容类型框架。
+django.contrib.sessions——一个会话框架。
+django.contrib.messages——一个消息框架。
+django.contrib.staticfiles——一个用于管理静态文件的框架。
+"""
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 新增的应用
+    "polls.apps.PollsConfig",
 ]
 
 MIDDLEWARE = [
@@ -76,6 +87,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        # NOTE(sunyindong.syd): 数据库文件的路径
+        # https://docs.djangoproject.com/en/4.2/intro/tutorial02/
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
@@ -105,7 +118,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# NOTE(sunyindong.syd): 时区设置为东八区, 不然时间显示不友好
+# https://docs.djangoproject.com/en/4.2/topics/i18n/timezones/
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

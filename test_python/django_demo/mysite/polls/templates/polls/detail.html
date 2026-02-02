@@ -1,0 +1,21 @@
+<!-- Django首先对question对象进行字典查找。如果失败，它会尝试属性查找——在这种情况下，这是可行的。如果属性查找也失败了，它就会尝试列表索引查找。
+
+person.name
+1.	这个对象像字典吗？ 有 key "name" 吗？
+2.	这个对象有属性 name 吗？ 比如 class 里定义了 name？
+3.	是不是把它当成列表，name 是不是一个数字？ 比如 person[“name”] 这种？
+
+-->
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h1>{{ question.question_text }}</h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+</fieldset>
+<input type="submit" value="Vote">
+</form>

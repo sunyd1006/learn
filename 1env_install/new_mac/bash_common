@@ -36,6 +36,7 @@ function load_config_from_learn() {
 }
 load_config_from_learn
 
+PS1='\u@\h:\W\$ '
 export LEARN="${syd_dir}/codespace/learn"
 bash_common="${LEARN}/1env_install/new_mac/bash_common"
 
@@ -108,7 +109,8 @@ if [[ ${LOAD_FIRST} == "true" ]]; then
 fi
 alias vibashrc="vi ${bash_common}"
 alias mysource="source ~/.bashrc "
-alias vilocal="vi ~/.bashrc.local"
+alias vibashlocal="vi ~/.bashrc.local"
+alias catbashlocal="vi ~/.bashrc.local"
 
 alias cdsyd="cd ${syd_dir}/"
 alias cdcode="cd ${syd_dir}/codespace/"
