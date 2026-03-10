@@ -22,8 +22,8 @@ function load_config_from_learn() {
   elif [[ ${HOME} == "/home/sunyindong" ]]; then
     syd_dir="$HOME"  # correct bytedance
   elif [[ ${HOME} == "/home/tiger" ]]; then
-#   merlin machine
-    syd_dir="$HOME"  # correct bytedance
+    # merlin dev machine
+    syd_dir="$HOME"
   else
     log_error "Unknown HOME: ${HOME}"
     syd_dir="${HOME}/sunyindong.syd"
@@ -128,11 +128,11 @@ alias print="printf '\e[?2004l' "
 # 2. cd alias
 # alias for dir、quick command、
 alias cddesktop="cd ~/Desktop"
-alias cddown="cd && cd ./Downloads"
-alias cddocu="cd && cd ./Documents"
-alias cdenv="cd && cd ./environment"
-alias cdwork="cd && cd ./workspace"
-alias cdcode="cd && cd ./codespace"
+alias cddown="cdsyd && cd ./Downloads"
+alias cddocu="cdsyd && cd ./Documents"
+alias cdenv="cdsyd && cd ./environment"
+alias cdwork="cdsyd && cd ./workspace"
+alias cdcode="cdsyd && cd ./codespace"
 alias cdjava="cdcode && cd ./TestJava"
 alias cdcom="cdcode && cd ./company"
 alias cdtest="cdcode && cd  ./test"
@@ -215,6 +215,7 @@ function mvndown() {
 alias cc="g++ -std=c++17 -g -pthread "
 alias g14="g++ -std=c++14 -g -pthread "
 alias g17="g++ -std=c++17 -g -pthread "
+alias act=". .venv/bin/activate "
 
 # ======= dev_tool
 function ms {
